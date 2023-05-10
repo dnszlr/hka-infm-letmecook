@@ -8,7 +8,6 @@ public class LetmecookApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(LetmecookApplication.class, args);
-        System.out.println("test print");
     }
 
 }
