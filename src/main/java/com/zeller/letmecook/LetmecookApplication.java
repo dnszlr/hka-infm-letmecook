@@ -4,10 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HkaInfmLetmecookApplication {
+public class LetmecookApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HkaInfmLetmecookApplication.class, args);
+        SpringApplication.run(LetmecookApplication.class, args);
+        System.out.println("test print");
     }
 
 }
