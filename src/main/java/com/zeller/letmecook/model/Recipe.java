@@ -1,4 +1,6 @@
 package com.zeller.letmecook.model;
 
-public record Recipe() {
+import java.util.List;
+
+public record Recipe(List<Food> ingredient, String description) {
 }

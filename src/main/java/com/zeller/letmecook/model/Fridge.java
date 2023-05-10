@@ -1,4 +1,5 @@
 package com.zeller.letmecook.model;
 
-public record Fridge() {
-}
+import java.util.List;
+
+public record Fridge(List<Food> content, float throwAwayAmount) {}
