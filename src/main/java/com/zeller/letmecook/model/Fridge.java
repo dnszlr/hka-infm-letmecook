@@ -12,7 +12,7 @@ public class Fridge {
     @MongoId(value = FieldType.OBJECT_ID)
     private String id;
     private List<Food> content;
-    float throwAwayAmount;
+    private float throwAwayAmount;
 
     public Fridge(List<Food> content, float throwAwayAmount) {
         this.content = content;
