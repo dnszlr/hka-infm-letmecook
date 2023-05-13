@@ -29,22 +29,26 @@ public class LetmecookController {
 	 */
 	@GetMapping("/recipes")
 	public List<Recipe> getRecipes() {
-		return null;
+		logger.info("LetmecookController#getRecipes#call");
+		return letmecookService.getAllRecipes();
 	}
 
 	@PostMapping("/recipes")
-	public List<Recipe> addRecipe() {
-		return null;
+	public List<Recipe> postRecipe(@RequestBody Recipe recipe) {
+		logger.info("LetmecookController#postRecipe#call#" + recipe);
+		return letmecookService.createRecipe(recipe);
 	}
 
-	@DeleteMapping("/recipes")
-	public List<Recipe> deleteRecipe() {
-		return null;
+	@DeleteMapping("/recipes/{id}")
+	public List<Recipe> deleteRecipe(@PathVariable String id) {
+		logger.info("LetmecookController#deleteRecipe#call#" + id);
+		return letmecookService.removeRecipe(id);
 	}
 
 	@PostMapping("/recipes/import")
 	public List<Recipe> importRecipes(@RequestBody List<Recipe> recipes) {
-		return null;
+		logger.info("LetmecookController#importRecipes#call#" + recipes);
+		return letmecookService.createRecipes(recipes);
 	}
 
 	/**
@@ -54,17 +58,26 @@ public class LetmecookController {
 	 */
 	@GetMapping("/fridge")
 	public Fridge getFridge() {
-		return null;
+		logger.info("LetmecookController#getFridge#call");
+		return letmecookService.getFridge();
+	}
+
+	@GetMapping("/fridge/waste")
+	public float getWasteAmount() {
+		logger.info("LetmecookController#getWasteAmount#call");
+		return letmecookService.determineWasteAmount();
 	}
 
 	@PostMapping("/groceries")
-	public List<Grocery> addGrocery(@RequestBody Grocery grocery) {
-		return null;
+	public List<Grocery> postGroceries(@RequestBody List<Grocery> groceries) {
+		logger.info("LetmecookController#postGroceries#call#" + groceries);
+		return letmecookService.addGroceriesToFridge(groceries);
 	}
 
 	@DeleteMapping("/groceries/{id}")
-	public List<Grocery> throwAwayGrocery(@PathVariable String id) {
-		return null;
+	public List<Grocery> deleteGroceryById(@PathVariable String id) {
+		logger.info("LetmecookController#deleteGroceryById#call#" + id);
+		return letmecookService.removeGroceryFromFridge(id);
 	}
 
 
@@ -75,11 +88,13 @@ public class LetmecookController {
 	 */
 	@GetMapping("/recipes/random")
 	public Recipe getRandomRecipe() {
-		return null;
+		logger.info("LetmecookController#getRandomRecipe#call");
+		return letmecookService.determineRandomRecipe();
 	}
 
 	@GetMapping("/recipes/best")
 	public Recipe getBestRecipe() {
-		return null;
+		logger.info("LetmecookController#getBestRecipe#call");
+		return letmecookService.determineBestRecipe();
 	}
 }

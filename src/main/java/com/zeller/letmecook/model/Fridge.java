@@ -12,11 +12,11 @@ public class Fridge {
     @MongoId(value = FieldType.OBJECT_ID)
     private String id;
     private List<Grocery> content;
-    private float throwAwayAmount;
+    private float wasteAmount;
 
-    public Fridge(List<Grocery> content, float throwAwayAmount) {
+    public Fridge(List<Grocery> content, float wasteAmount) {
         this.content = content;
-        this.throwAwayAmount = throwAwayAmount;
+        this.wasteAmount = wasteAmount;
     }
 
     public String getId() {
@@ -35,12 +35,12 @@ public class Fridge {
         this.content = content;
     }
 
-    public float getThrowAwayAmount() {
-        return throwAwayAmount;
+    public float getWasteAmount() {
+        return wasteAmount;
     }
 
-    public void setThrowAwayAmount(float throwAwayAmount) {
-        this.throwAwayAmount = throwAwayAmount;
+    public void setWasteAmount(float wasteAmount) {
+        this.wasteAmount = wasteAmount;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class Fridge {
 
         Fridge fridge = (Fridge) o;
 
-        if(Float.compare(fridge.throwAwayAmount, throwAwayAmount) != 0)
+        if(Float.compare(fridge.wasteAmount, wasteAmount) != 0)
             return false;
         if(!id.equals(fridge.id))
             return false;
@@ -63,7 +63,7 @@ public class Fridge {
     public int hashCode() {
         int result = id.hashCode();
         result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (throwAwayAmount != +0.0f ? Float.floatToIntBits(throwAwayAmount) : 0);
+        result = 31 * result + (wasteAmount != +0.0f ? Float.floatToIntBits(wasteAmount) : 0);
         return result;
     }
 
@@ -72,7 +72,7 @@ public class Fridge {
         return "Fridge{" +
                 "id='" + id + '\'' +
                 ", content=" + content +
-                ", throwAwayAmount=" + throwAwayAmount +
+                ", throwAwayAmount=" + wasteAmount +
                 '}';
     }
 }
