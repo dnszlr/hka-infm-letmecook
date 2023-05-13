@@ -1,5 +1,7 @@
 # hka-infm-letmecook
 
+![Repository Banner](https://i.imgflip.com/74bvex.png)
+
 Repository for the seminar paper on "Monitoring of Applications with Micrometer" supervised by Professor Vogelsang at Karlsruhe University of Applied Sciences.
 
 ## Required Installation
