@@ -16,7 +16,7 @@ import java.util.*;
 @Service
 public class LetmecookService {
 
-	private Logger logger;
+	private final Logger logger;
 	private final FridgeRepository fridgeRepository;
 	private final RecipeRepository recipeRepository;
 
@@ -81,10 +81,9 @@ public class LetmecookService {
 		return fridgeRepository.getFridgeById(id)
 				.map(fridge -> {
 					List<String> groceryNames = fridge.getGroceries().stream().map(Grocery::getName).toList();
-					List<Recipe> recipes = recipeRepository.getAll();
 					List<Recipe> bestRecipes = new ArrayList<>();
 					long maxCounter = 0;
-					for(Recipe recipe : recipes) {
+					for(Recipe recipe : recipeRepository.getAll()) {
 						long counter = countMatchingElements(groceryNames, recipe.getIngredients());
 						if(counter == maxCounter) {
 							bestRecipes.add(recipe);
