@@ -11,11 +11,11 @@ import java.util.Objects;
 public class Fridge {
     @MongoId(value = FieldType.OBJECT_ID)
     private String id;
-    private List<Grocery> content;
+    private List<Grocery> groceries;
     private float wasteAmount;
 
-    public Fridge(List<Grocery> content, float wasteAmount) {
-        this.content = content;
+    public Fridge(List<Grocery> groceries, float wasteAmount) {
+        this.groceries = groceries;
         this.wasteAmount = wasteAmount;
     }
 
@@ -27,12 +27,12 @@ public class Fridge {
         this.id = id;
     }
 
-    public List<Grocery> getContent() {
-        return content;
+    public List<Grocery> getGroceries() {
+        return groceries;
     }
 
-    public void setContent(List<Grocery> content) {
-        this.content = content;
+    public void setGroceries(List<Grocery> groceries) {
+        this.groceries = groceries;
     }
 
     public float getWasteAmount() {
@@ -56,13 +56,13 @@ public class Fridge {
             return false;
         if(!id.equals(fridge.id))
             return false;
-        return Objects.equals(content, fridge.content);
+        return Objects.equals(groceries, fridge.groceries);
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (groceries != null ? groceries.hashCode() : 0);
         result = 31 * result + (wasteAmount != +0.0f ? Float.floatToIntBits(wasteAmount) : 0);
         return result;
     }
@@ -71,7 +71,7 @@ public class Fridge {
     public String toString() {
         return "Fridge{" +
                 "id='" + id + '\'' +
-                ", content=" + content +
+                ", content=" + groceries +
                 ", throwAwayAmount=" + wasteAmount +
                 '}';
     }

@@ -1,7 +1,9 @@
 package com.zeller.letmecook.service;
 
+import com.zeller.letmecook.basic.RandomGenerator;
 import com.zeller.letmecook.model.Fridge;
 import com.zeller.letmecook.model.Grocery;
+import com.zeller.letmecook.model.Ingredient;
 import com.zeller.letmecook.model.Recipe;
 import com.zeller.letmecook.repository.FridgeRepository;
 import com.zeller.letmecook.repository.RecipeRepository;
@@ -53,12 +55,38 @@ public class LetmecookService {
 	 * #### Query Logic  ####
 	 * ######################
 	 */
+
+	/**
+	 * Accepts any fridge id and determines a random recipe for the ingredients it contains.
+	 * It is not said how many of the ingredients are used in the recipe.
+	 * @param id
+	 * @return A random recipe
+	 */
 	public Optional<Recipe> determineRandomRecipe(String id) {
-		return null;
+		return fridgeRepository.getFridgeById(id)
+				.map(fridge -> {
+					List<Recipe> recipes = recipeRepository.getAll();
+					return matchingRecipes(recipes, fridge.getGroceries()).get(RandomGenerator.generate(0, recipes.size()));
+				});
 	}
 
 	public Optional<Recipe> determineBestRecipe(String id) {
-		return null;
+		return fridgeRepository.getFridgeById(id)
+				.map(fridge -> {
+					List<Grocery> groceries = fridge.getGroceries();
+					List<Recipe> matchingRecipes = matchingRecipes(recipeRepository.getAll(), groceries);
+
+
+					return null;
+				});
+	}
+
+	private List<Recipe> matchingRecipes(List<Recipe> recipes, List<Grocery> groceries) {
+		return recipes.stream()
+				.filter(recipe -> recipe.getIngredients()
+						.stream()
+						.anyMatch(ingredient -> groceries.stream()
+								.anyMatch(grocery -> Objects.equals(grocery.getName(), ingredient.getName())))).toList();
 	}
 
 	/**
@@ -83,19 +111,21 @@ public class LetmecookService {
 
 	public Optional<Fridge> addGroceriesToFridge(String id, List<Grocery> groceries) {
 		return fridgeRepository.getFridgeById(id)
-				.filter(fridge -> fridge.getContent().addAll(groceries))
+				.filter(fridge -> fridge.getGroceries().addAll(groceries))
 				.map(fridgeRepository::save);
 	}
 
 	public Optional<Fridge> removeGroceryFromFridge(String id, String name) {
 		return fridgeRepository.getFridgeById(id)
 				.map(fridge -> {
-					Grocery groceryToBeRemoved = fridge.getContent().stream()
+					Grocery groceryToBeRemoved = fridge.getGroceries().stream()
 							.filter(grocery -> Objects.equals(grocery.getName(), name))
 							.findFirst().orElse(null);
+					logger.info("LetmecookService#removeGroceryFromFridge#groceryToBeRemoved: " + groceryToBeRemoved);
 					if (groceryToBeRemoved != null) {
 						fridge.setWasteAmount(groceryToBeRemoved.getPrice());
-						fridge.getContent().remove(groceryToBeRemoved);
+						fridge.getGroceries().remove(groceryToBeRemoved);
+						logger.info("LetmecookService#removeGroceryFromFridge#fridge: " + fridge);
 						return fridgeRepository.save(fridge);
 					}
 					return fridge;

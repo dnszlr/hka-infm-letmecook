@@ -57,6 +57,27 @@ public class LetmecookController {
 
 	/**
 	 * ######################
+	 * ####  Query APIs  ####
+	 * ######################
+	 */
+	@GetMapping("/fridges/{id}/random")
+	public ResponseEntity<Recipe> getRandomRecipe(@PathVariable String id) {
+		logger.info("LetmecookController#getRandomRecipe#call");
+		return letmecookService.determineRandomRecipe(id)
+				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@GetMapping("/fridges/{id}/best")
+	public ResponseEntity<Recipe> getBestRecipe(@PathVariable String id) {
+		logger.info("LetmecookController#getBestRecipe#call#" + id);
+		return letmecookService.determineBestRecipe(id)
+				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	/**
+	 * ######################
 	 * #### Fridge APIs  ####
 	 * ######################
 	 */
@@ -95,24 +116,4 @@ public class LetmecookController {
 		return letmecookService.removeGroceryFromFridge(id, name).map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-	/**
-	 * ######################
-	 * ####  Query APIs  ####
-	 * ######################
-	 */
-	@GetMapping("/fridges/{id}/random")
-	public ResponseEntity<Recipe> getRandomRecipe(@PathVariable String id) {
-		logger.info("LetmecookController#getRandomRecipe#call");
-		return letmecookService.determineRandomRecipe(id)
-				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
-				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-	}
-
-	@GetMapping("/fridges/{id}/best")
-	public ResponseEntity<Recipe> getBestRecipe(@PathVariable String id) {
-		logger.info("LetmecookController#getBestRecipe#call#" + id);
-		return letmecookService.determineBestRecipe(id)
-				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
-				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-	}
 }
