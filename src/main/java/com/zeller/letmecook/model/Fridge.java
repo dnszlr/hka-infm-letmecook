@@ -11,10 +11,10 @@ import java.util.Objects;
 public class Fridge {
     @MongoId(value = FieldType.OBJECT_ID)
     private String id;
-    private List<Food> content;
+    private List<Grocery> content;
     private float throwAwayAmount;
 
-    public Fridge(List<Food> content, float throwAwayAmount) {
+    public Fridge(List<Grocery> content, float throwAwayAmount) {
         this.content = content;
         this.throwAwayAmount = throwAwayAmount;
     }
@@ -27,11 +27,11 @@ public class Fridge {
         this.id = id;
     }
 
-    public List<Food> getContent() {
+    public List<Grocery> getContent() {
         return content;
     }
 
-    public void setContent(List<Food> content) {
+    public void setContent(List<Grocery> content) {
         this.content = content;
     }
 
@@ -45,13 +45,17 @@ public class Fridge {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if(this == o)
+            return true;
+        if(o == null || getClass() != o.getClass())
+            return false;
 
         Fridge fridge = (Fridge) o;
 
-        if (Float.compare(fridge.throwAwayAmount, throwAwayAmount) != 0) return false;
-        if (!id.equals(fridge.id)) return false;
+        if(Float.compare(fridge.throwAwayAmount, throwAwayAmount) != 0)
+            return false;
+        if(!id.equals(fridge.id))
+            return false;
         return Objects.equals(content, fridge.content);
     }
 

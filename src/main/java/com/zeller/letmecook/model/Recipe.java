@@ -1,5 +1,6 @@
 package com.zeller.letmecook.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -11,12 +12,23 @@ import java.util.Objects;
 public class Recipe {
     @MongoId(value = FieldType.OBJECT_ID)
     private String id;
-    private List<Food> ingredients;
+    @Indexed(unique = true)
+    private String name;
+    private List<Ingredient> ingredients;
     private String description;
 
-    public Recipe(List<Food> ingredients, String description) {
+    public Recipe(String name, List<Ingredient> ingredients, String description) {
+        this.name = name;
         this.ingredients = ingredients;
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getId() {
@@ -27,11 +39,11 @@ public class Recipe {
         this.id = id;
     }
 
-    public List<Food> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Food> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -45,19 +57,26 @@ public class Recipe {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if(this == o)
+            return true;
+        if(o == null || getClass() != o.getClass())
+            return false;
 
         Recipe recipe = (Recipe) o;
 
-        if (!id.equals(recipe.id)) return false;
-        if (!Objects.equals(ingredients, recipe.ingredients)) return false;
+        if(!id.equals(recipe.id))
+            return false;
+        if(!Objects.equals(name, recipe.name))
+            return false;
+        if(!Objects.equals(ingredients, recipe.ingredients))
+            return false;
         return Objects.equals(description, recipe.description);
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (ingredients != null ? ingredients.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
@@ -66,7 +85,7 @@ public class Recipe {
     @Override
     public String toString() {
         return "Recipe{" +
-                "id='" + id + '\'' +
+                "name='" + name + '\'' +
                 ", ingredients=" + ingredients +
                 ", description='" + description + '\'' +
                 '}';
