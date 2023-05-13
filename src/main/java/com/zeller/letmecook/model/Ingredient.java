@@ -6,9 +6,9 @@ public class Ingredient {
 
 	private String name;
 	private float amount;
-	private Unit unit;
+	private String unit;
 
-	public Ingredient(String name, float amount, Unit unit) {
+	public Ingredient(String name, float amount, String unit) {
 		this.name = name;
 		this.amount = amount;
 		this.unit = unit;
@@ -30,28 +30,24 @@ public class Ingredient {
 		this.amount = amount;
 	}
 
-	public Unit getUnit() {
+	public String getUnit() {
 		return unit;
 	}
 
-	public void setUnit(Unit unit) {
+	public void setUnit(String unit) {
 		this.unit = unit;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if(this == o)
-			return true;
-		if(o == null || getClass() != o.getClass())
-			return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		Ingredient that = (Ingredient) o;
 
-		if(Float.compare(that.amount, amount) != 0)
-			return false;
-		if(!Objects.equals(name, that.name))
-			return false;
-		return unit == that.unit;
+		if (Float.compare(that.amount, amount) != 0) return false;
+		if (!Objects.equals(name, that.name)) return false;
+		return Objects.equals(unit, that.unit);
 	}
 
 	@Override
@@ -67,7 +63,7 @@ public class Ingredient {
 		return "Ingredient{" +
 				"name='" + name + '\'' +
 				", amount=" + amount +
-				", unit=" + unit +
+				", unit='" + unit + '\'' +
 				'}';
 	}
 }

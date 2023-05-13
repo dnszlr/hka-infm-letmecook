@@ -9,7 +9,7 @@ public class Grocery extends Ingredient{
 	private LocalDate purchase;
 	private LocalDate expiration;
 
-	public Grocery(String name, float amount, Unit unit, float price, LocalDate purchase, LocalDate expiration) {
+	public Grocery(String name, float amount, String unit, float price, LocalDate purchase, LocalDate expiration) {
 		super(name, amount, unit);
 		this.price = price;
 		this.purchase = purchase;
@@ -42,19 +42,14 @@ public class Grocery extends Ingredient{
 
 	@Override
 	public boolean equals(Object o) {
-		if(this == o)
-			return true;
-		if(o == null || getClass() != o.getClass())
-			return false;
-		if(!super.equals(o))
-			return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
 
 		Grocery grocery = (Grocery) o;
 
-		if(Float.compare(grocery.price, price) != 0)
-			return false;
-		if(!Objects.equals(purchase, grocery.purchase))
-			return false;
+		if (Float.compare(grocery.price, price) != 0) return false;
+		if (!Objects.equals(purchase, grocery.purchase)) return false;
 		return Objects.equals(expiration, grocery.expiration);
 	}
 
@@ -65,5 +60,17 @@ public class Grocery extends Ingredient{
 		result = 31 * result + (purchase != null ? purchase.hashCode() : 0);
 		result = 31 * result + (expiration != null ? expiration.hashCode() : 0);
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "Grocery{" +
+				"name='" + getName() + '\'' +
+				", amount=" + getAmount() +
+				", unit='" + getUnit() + '\'' +
+				"price=" + price +
+				", purchase=" + purchase +
+				", expiration=" + expiration +
+				'}';
 	}
 }
