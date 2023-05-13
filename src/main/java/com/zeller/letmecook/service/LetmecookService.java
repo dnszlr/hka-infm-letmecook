@@ -32,7 +32,7 @@ public class LetmecookService {
 	 * ######################
 	 */
 	public List<Recipe> getAllRecipes() {
-		return recipeRepository.getAll();
+		return recipeRepository.findAll();
 	}
 
 	public Optional<Recipe> createRecipe(Recipe recipe) {
@@ -62,7 +62,7 @@ public class LetmecookService {
 	public Optional<Recipe> determineRandomRecipe(String id) {
 		return fridgeRepository.getFridgeById(id)
 				.map(fridge -> {
-					List<Recipe> recipes = recipeRepository.getAll();
+					List<Recipe> recipes = this.getAllRecipes();
 					return recipes.stream()
 							.filter(recipe -> recipe.getIngredients()
 									.stream()
@@ -83,7 +83,7 @@ public class LetmecookService {
 					List<String> groceryNames = fridge.getGroceries().stream().map(Grocery::getName).toList();
 					List<Recipe> bestRecipes = new ArrayList<>();
 					long maxCounter = 0;
-					for(Recipe recipe : recipeRepository.getAll()) {
+					for(Recipe recipe : this.getAllRecipes()) {
 						long counter = countMatchingElements(groceryNames, recipe.getIngredients());
 						if(counter == maxCounter) {
 							bestRecipes.add(recipe);
