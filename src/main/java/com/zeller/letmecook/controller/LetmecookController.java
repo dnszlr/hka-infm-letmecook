@@ -6,6 +6,8 @@ import com.zeller.letmecook.model.Recipe;
 import com.zeller.letmecook.service.LetmecookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,9 +36,11 @@ public class LetmecookController {
 	}
 
 	@PostMapping("/recipes")
-	public List<Recipe> postRecipe(@RequestBody Recipe recipe) {
+	public ResponseEntity<Recipe> postRecipe(@RequestBody Recipe recipe) {
 		logger.info("LetmecookController#postRecipe#call#" + recipe);
-		return letmecookService.createRecipe(recipe);
+		return letmecookService.createRecipe(recipe)
+				.map(createdRecipe -> new ResponseEntity<>(createdRecipe, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.CONFLICT));
 	}
 
 	@DeleteMapping("/recipes/{id}")
@@ -56,45 +60,59 @@ public class LetmecookController {
 	 * #### Fridge APIs  ####
 	 * ######################
 	 */
-	@GetMapping("/fridge")
-	public Fridge getFridge() {
-		logger.info("LetmecookController#getFridge#call");
-		return letmecookService.getFridge();
+	@GetMapping("/fridges/{id}")
+	public ResponseEntity<Fridge> getFridge(@PathVariable String id) {
+		logger.info("LetmecookController#getFridge#call#" + id);
+		return letmecookService.getFridge(id)
+				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.CONFLICT));
 	}
 
-	@GetMapping("/fridge/waste")
-	public float getWasteAmount() {
-		logger.info("LetmecookController#getWasteAmount#call");
-		return letmecookService.determineWasteAmount();
+	@PostMapping("/fridges")
+	public ResponseEntity<Fridge> createFridge() {
+		return letmecookService.createFridge()
+				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-	@PostMapping("/groceries")
-	public List<Grocery> postGroceries(@RequestBody List<Grocery> groceries) {
-		logger.info("LetmecookController#postGroceries#call#" + groceries);
-		return letmecookService.addGroceriesToFridge(groceries);
+	@GetMapping("/fridges/{id}/waste")
+	public float getWasteAmount(@PathVariable String id) {
+		logger.info("LetmecookController#getWasteAmount#call#" + id);
+		return letmecookService.determineWasteAmount(id);
 	}
 
-	@DeleteMapping("/groceries/{id}")
-	public List<Grocery> deleteGroceryById(@PathVariable String id) {
-		logger.info("LetmecookController#deleteGroceryById#call#" + id);
-		return letmecookService.removeGroceryFromFridge(id);
+	@PostMapping("/fridges/{id}/groceries")
+	public ResponseEntity<Fridge> postGroceries(@PathVariable String id, @RequestBody List<Grocery> groceries) {
+		logger.info("LetmecookController#postGroceries#call#" + id + "#" + groceries);
+		return letmecookService.addGroceriesToFridge(id, groceries)
+				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.CONFLICT));
 	}
 
+	@DeleteMapping("/fridges/{id}/groceries/{name}")
+	public ResponseEntity<Fridge> deleteGroceryByName(@PathVariable String id, @PathVariable String name) {
+		logger.info("LetmecookController#deleteGroceryById#call#" + id + "#" + name);
+		return letmecookService.removeGroceryFromFridge(id, name).map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
 
 	/**
 	 * ######################
 	 * ####  Query APIs  ####
 	 * ######################
 	 */
-	@GetMapping("/recipes/random")
-	public Recipe getRandomRecipe() {
+	@GetMapping("/fridges/{id}/random")
+	public ResponseEntity<Recipe> getRandomRecipe(@PathVariable String id) {
 		logger.info("LetmecookController#getRandomRecipe#call");
-		return letmecookService.determineRandomRecipe();
+		return letmecookService.determineRandomRecipe(id)
+				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-	@GetMapping("/recipes/best")
-	public Recipe getBestRecipe() {
-		logger.info("LetmecookController#getBestRecipe#call");
-		return letmecookService.determineBestRecipe();
+	@GetMapping("/fridges/{id}/best")
+	public ResponseEntity<Recipe> getBestRecipe(@PathVariable String id) {
+		logger.info("LetmecookController#getBestRecipe#call#" + id);
+		return letmecookService.determineBestRecipe(id)
+				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 }
