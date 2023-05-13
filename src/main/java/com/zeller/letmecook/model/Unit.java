@@ -7,5 +7,5 @@ public enum Unit {
     CAN,
     PIECE,
     GRAM,
-    LITER
+    MILLILITER
 }

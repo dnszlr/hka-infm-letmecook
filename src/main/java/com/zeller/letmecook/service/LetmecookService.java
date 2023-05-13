@@ -60,16 +60,14 @@ public class LetmecookService {
 	 * @return A random recipe
 	 */
 	public Optional<Recipe> determineRandomRecipe(String id) {
-		return fridgeRepository.getFridgeById(id)
-				.map(fridge -> {
-					List<Recipe> recipes = this.getAllRecipes();
-					return recipes.stream()
-							.filter(recipe -> recipe.getIngredients()
-									.stream()
-									.anyMatch(ingredient -> fridge.getGroceries().stream()
-											.anyMatch(grocery -> Objects.equals(grocery.getName(), ingredient.getName()))))
-							.toList().get(RandomGenerator.generate(0, recipes.size()));
-				});
+		List<Recipe> randomRecipes = fridgeRepository.getFridgeById(id)
+				.map(fridge -> this.getAllRecipes().stream()
+						.filter(recipe -> recipe.getIngredients()
+								.stream()
+								.anyMatch(ingredient -> fridge.getGroceries().stream()
+										.anyMatch(grocery -> Objects.equals(grocery.getName(), ingredient.getName())))).toList()).orElse(Collections.emptyList());
+		// TODO fix problems and use optional better
+		return Optional.of(randomRecipes.get(RandomGenerator.generate(0, randomRecipes.size())));
 	}
 
 	/**
