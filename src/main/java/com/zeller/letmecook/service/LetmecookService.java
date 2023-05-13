@@ -11,10 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class LetmecookService {
@@ -66,7 +63,12 @@ public class LetmecookService {
 		return fridgeRepository.getFridgeById(id)
 				.map(fridge -> {
 					List<Recipe> recipes = recipeRepository.getAll();
-					return matchingRecipes(recipes, fridge.getGroceries()).get(RandomGenerator.generate(0, recipes.size()));
+					return recipes.stream()
+							.filter(recipe -> recipe.getIngredients()
+									.stream()
+									.anyMatch(ingredient -> fridge.getGroceries().stream()
+											.anyMatch(grocery -> Objects.equals(grocery.getName(), ingredient.getName()))))
+							.toList().get(RandomGenerator.generate(0, recipes.size()));
 				});
 	}
 
@@ -74,19 +76,24 @@ public class LetmecookService {
 		return fridgeRepository.getFridgeById(id)
 				.map(fridge -> {
 					List<Grocery> groceries = fridge.getGroceries();
-					List<Recipe> matchingRecipes = matchingRecipes(recipeRepository.getAll(), groceries);
-
-
-					return null;
+					List<Recipe> recipes = recipeRepository.getAll();
+					List<List<Recipe>> bestRecipes = new ArrayList<>();
+					for(Recipe recipe : recipes) {
+						int counter = 0;
+						List<Recipe> iterationRecipes = new ArrayList<>();
+						for(Ingredient ingredient : recipe.getIngredients()) {
+							if(groceries.stream().anyMatch(grocery -> Objects.equals(grocery.getName(), ingredient.getName()))) {
+								counter++;
+								iterationRecipes.add(recipe);
+							}
+						}
+						while(bestRecipes.size() <= counter) {
+							bestRecipes.add(new ArrayList<>());
+						}
+						bestRecipes.get(counter).addAll(iterationRecipes);
+					}
+					return bestRecipes.get(bestRecipes.size() - 1).get(RandomGenerator.generate(0, 2));
 				});
-	}
-
-	private List<Recipe> matchingRecipes(List<Recipe> recipes, List<Grocery> groceries) {
-		return recipes.stream()
-				.filter(recipe -> recipe.getIngredients()
-						.stream()
-						.anyMatch(ingredient -> groceries.stream()
-								.anyMatch(grocery -> Objects.equals(grocery.getName(), ingredient.getName())))).toList();
 	}
 
 	/**
