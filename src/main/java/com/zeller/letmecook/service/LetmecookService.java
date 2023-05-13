@@ -72,28 +72,43 @@ public class LetmecookService {
 				});
 	}
 
+	/**
+	 * Accepts any fridge id and determines a random and best matching recipe for the ingredients it contains.
+	 * @param id
+	 * @return A recipe that consumes the most groceries
+	 */
 	public Optional<Recipe> determineBestRecipe(String id) {
 		return fridgeRepository.getFridgeById(id)
 				.map(fridge -> {
-					List<Grocery> groceries = fridge.getGroceries();
+					List<String> groceryNames = fridge.getGroceries().stream().map(Grocery::getName).toList();
 					List<Recipe> recipes = recipeRepository.getAll();
-					List<List<Recipe>> bestRecipes = new ArrayList<>();
+					List<Recipe> bestRecipes = new ArrayList<>();
+					long maxCounter = 0;
 					for(Recipe recipe : recipes) {
-						int counter = 0;
-						List<Recipe> iterationRecipes = new ArrayList<>();
-						for(Ingredient ingredient : recipe.getIngredients()) {
-							if(groceries.stream().anyMatch(grocery -> Objects.equals(grocery.getName(), ingredient.getName()))) {
-								counter++;
-								iterationRecipes.add(recipe);
-							}
+						long counter = countMatchingElements(groceryNames, recipe.getIngredients());
+						if(counter == maxCounter) {
+							bestRecipes.add(recipe);
+						} else if(counter > maxCounter) {
+							maxCounter = counter;
+							bestRecipes = new ArrayList<>();
+							bestRecipes.add(recipe);
 						}
-						while(bestRecipes.size() <= counter) {
-							bestRecipes.add(new ArrayList<>());
-						}
-						bestRecipes.get(counter).addAll(iterationRecipes);
 					}
-					return bestRecipes.get(bestRecipes.size() - 1).get(RandomGenerator.generate(0, 2));
+					return bestRecipes.get(RandomGenerator.generate(0, bestRecipes.size()));
 				});
+	}
+
+	/**
+	 * Counts the amount of ingredient names, that occure in the groceryNames List
+	 * @param groceryNames
+	 * @param ingredients
+	 * @return The amount of matching elements in both lists
+	 */
+	private long countMatchingElements(List<String> groceryNames, List<Ingredient> ingredients) {
+		return ingredients.stream()
+				.map(Ingredient::getName)
+				.filter(groceryNames::contains)
+				.count();
 	}
 
 	/**
@@ -133,7 +148,7 @@ public class LetmecookService {
 						fridge.setWasteAmount(groceryToBeRemoved.getPrice());
 						fridge.getGroceries().remove(groceryToBeRemoved);
 						logger.info("LetmecookService#removeGroceryFromFridge#fridge: " + fridge);
-						return fridgeRepository.save(fridge);
+						fridge = fridgeRepository.save(fridge);
 					}
 					return fridge;
 				});
