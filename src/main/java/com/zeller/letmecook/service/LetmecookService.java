@@ -1,14 +1,12 @@
 package com.zeller.letmecook.service;
 
 import com.zeller.letmecook.basic.RandomGenerator;
-import com.zeller.letmecook.model.Fridge;
-import com.zeller.letmecook.model.Grocery;
-import com.zeller.letmecook.model.Ingredient;
-import com.zeller.letmecook.model.Recipe;
+import com.zeller.letmecook.model.*;
 import com.zeller.letmecook.repository.FridgeRepository;
 import com.zeller.letmecook.repository.RecipeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -48,47 +46,66 @@ public class LetmecookService {
 	}
 
 	/**
-	 * ######################
-	 * #### Query Logic  ####
-	 * ######################
-	 */
-
-	/**
 	 * Accepts any fridge id and determines a random recipe for the ingredients it contains.
 	 * It is not said how many of the ingredients are used in the recipe.
-	 * @param id
+	 * @param id the ID of the fridge to check for available ingredients
 	 * @return A random recipe
 	 */
-	public Optional<Recipe> determineRandomRecipe(String id) {
-		List<Recipe> randomRecipes = fridgeRepository.getFridgeById(id)
-				.map(fridge -> this.getAllRecipes().stream()
-						.filter(recipe -> recipe.getIngredients()
-								.stream()
-								.anyMatch(ingredient -> fridge.getGroceries().stream()
-										.anyMatch(grocery -> Objects.equals(grocery.getName(), ingredient.getName())))).toList()).orElse(Collections.emptyList());
-		// TODO fix problems and use optional better
-		return Optional.of(randomRecipes.get(RandomGenerator.generate(0, randomRecipes.size())));
+	public Optional<RecipeResponse> determineRandomRecipe(String id) {
+		return fridgeRepository.getFridgeById(id)
+				.map(fridge -> {
+					List<String> groceryNames = getGroceryNames(fridge.getGroceries());
+					List<Recipe> randomRecipes = new ArrayList<>();
+					for(Recipe recipe : this.getAllRecipes()) {
+						if(containsAnyIngredientInGroceryList(groceryNames, recipe.getIngredients())) {
+							randomRecipes.add(recipe);
+						}
+					}
+					Recipe recipe = randomRecipes.get(RandomGenerator.generate(0, randomRecipes.size()));
+					Pair<List<Ingredient>, List<Ingredient>> sortedIngredients = sortIngredients(groceryNames, recipe.getIngredients());
+					return new RecipeResponse(recipe, sortedIngredients.getFirst(), sortedIngredients.getSecond());
+				});
 	}
 
 	/**
-	 * Accepts any fridge id and determines a random and best matching recipe for the ingredients it contains.
-	 * @param id
-	 * @return A recipe that consumes the most groceries
+	 * Determines if any ingredient from a list of ingredients is contained at least once
+	 * in a list of grocery names.
+	 *
+	 * @param groceryNames the list of grocery names
+	 * @param ingredients the list of ingredients to check
+	 * @return true if at least one ingredient is contained in the grocery names list, false otherwise
 	 */
-	public Optional<Recipe> determineBestRecipe(String id) {
+	public boolean containsAnyIngredientInGroceryList(List<String> groceryNames, List<Ingredient> ingredients) {
+		return ingredients.stream().map(Ingredient::getName).anyMatch(groceryNames::contains);
+	}
+
+
+	/**
+	 * Returns an optional containing a randomly selected best recipe based on the ingredients
+	 * available in the fridge associated with the given ID. If the fridge with the given ID
+	 * cannot be found, an empty optional is returned.
+	 *
+	 * @param id the ID of the fridge to check for available ingredients
+	 * @return an optional containing a randomly selected best recipe, or an empty optional
+	 *         if the fridge with the given ID cannot be found
+	 */
+	public Optional<RecipeResponse> determineBestRecipe(String id) {
 		return fridgeRepository.getFridgeById(id)
 				.map(fridge -> {
-					List<String> groceryNames = fridge.getGroceries().stream().map(Grocery::getName).toList();
-					List<Recipe> bestRecipes = new ArrayList<>();
+					List<String> groceryNames = getGroceryNames(fridge.getGroceries());
+					List<RecipeResponse> bestRecipes = new ArrayList<>();
 					long maxCounter = 0;
 					for(Recipe recipe : this.getAllRecipes()) {
-						long counter = countMatchingElements(groceryNames, recipe.getIngredients());
+						Pair<List<Ingredient>, List<Ingredient>> sortedIngredients = sortIngredients(groceryNames, recipe.getIngredients());
+						List<Ingredient> availableIngredients = sortedIngredients.getFirst();
+						List<Ingredient> missingIngredients = sortedIngredients.getSecond();
+						int counter = availableIngredients.size();
 						if(counter == maxCounter) {
-							bestRecipes.add(recipe);
+							bestRecipes.add(new RecipeResponse(recipe, availableIngredients, missingIngredients));
 						} else if(counter > maxCounter) {
 							maxCounter = counter;
-							bestRecipes = new ArrayList<>();
-							bestRecipes.add(recipe);
+							bestRecipes.clear();
+							bestRecipes.add(new RecipeResponse(recipe, availableIngredients, missingIngredients));
 						}
 					}
 					return bestRecipes.get(RandomGenerator.generate(0, bestRecipes.size()));
@@ -96,16 +113,31 @@ public class LetmecookService {
 	}
 
 	/**
-	 * Counts the amount of ingredient names, that occure in the groceryNames List
-	 * @param groceryNames
-	 * @param ingredients
-	 * @return The amount of matching elements in both lists
+	 * Sorts the list of ingredients into matching and missing ingredients based on a list of grocery names.
+	 * @param groceryNames the list of grocery names
+	 * @param ingredients the list of ingredients
+	 * @return A pair of lists containing the matching and missing ingredients
 	 */
-	private long countMatchingElements(List<String> groceryNames, List<Ingredient> ingredients) {
-		return ingredients.stream()
-				.map(Ingredient::getName)
-				.filter(groceryNames::contains)
-				.count();
+	private Pair<List<Ingredient>, List<Ingredient>> sortIngredients(List<String> groceryNames, List<Ingredient> ingredients) {
+		List<Ingredient> missingIngredients = new ArrayList<>();
+		List<Ingredient> matchingIngredients = new ArrayList<>();
+		for(Ingredient ingredient : ingredients) {
+			if(groceryNames.contains(ingredient.getName())) {
+				matchingIngredients.add(ingredient);
+			} else {
+				missingIngredients.add(ingredient);
+			}
+		}
+		return Pair.of(matchingIngredients, missingIngredients);
+	}
+
+	/**
+	 * Casts the grocery list to a list of Strings
+	 * @param groceries The available ingredients
+	 * @return The List of Strings of the names of passed groceries
+	 */
+	private List<String> getGroceryNames(List<Grocery> groceries) {
+		return groceries.stream().map(Grocery::getName).toList();
 	}
 
 	/**
@@ -133,7 +165,14 @@ public class LetmecookService {
 				.filter(fridge -> fridge.getGroceries().addAll(groceries))
 				.map(fridgeRepository::save);
 	}
-
+	/**
+	 * Removes the grocery with the given name from the fridge with the given id.
+	 * The method also increases the wasteAmount of the fridge by the price of the removed grocery.
+	 *
+	 * @param id   The id of the fridge to remove the grocery from.
+	 * @param name The name of the grocery to be removed.
+	 * @return An optional containing the updated fridge, or an empty optional if the fridge was not found or if the grocery was not found in the fridge.
+	 */
 	public Optional<Fridge> removeGroceryFromFridge(String id, String name) {
 		return fridgeRepository.getFridgeById(id)
 				.map(fridge -> {

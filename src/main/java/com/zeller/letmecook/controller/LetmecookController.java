@@ -1,5 +1,6 @@
 package com.zeller.letmecook.controller;
 
+import com.zeller.letmecook.model.RecipeResponse;
 import com.zeller.letmecook.model.Fridge;
 import com.zeller.letmecook.model.Grocery;
 import com.zeller.letmecook.model.Recipe;
@@ -16,8 +17,8 @@ import java.util.List;
 @RequestMapping("/lmc")
 public class LetmecookController {
 
-	private Logger logger;
-	private LetmecookService letmecookService;
+	private final Logger logger;
+	private final LetmecookService letmecookService;
 
 	public LetmecookController(LetmecookService letmecookService) {
 		this.logger = LoggerFactory.getLogger(LetmecookController.class);
@@ -61,7 +62,7 @@ public class LetmecookController {
 	 * ######################
 	 */
 	@GetMapping("/fridges/{id}/random")
-	public ResponseEntity<Recipe> getRandomRecipe(@PathVariable String id) {
+	public ResponseEntity<RecipeResponse> getRandomRecipe(@PathVariable String id) {
 		logger.info("LetmecookController#getRandomRecipe#call");
 		return letmecookService.determineRandomRecipe(id)
 				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
@@ -69,7 +70,7 @@ public class LetmecookController {
 	}
 
 	@GetMapping("/fridges/{id}/best")
-	public ResponseEntity<Recipe> getBestRecipe(@PathVariable String id) {
+	public ResponseEntity<RecipeResponse> getBestRecipe(@PathVariable String id) {
 		logger.info("LetmecookController#getBestRecipe#call#" + id);
 		return letmecookService.determineBestRecipe(id)
 				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
