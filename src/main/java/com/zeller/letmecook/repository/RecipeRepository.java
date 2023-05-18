@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface RecipeRepository extends MongoRepository<Recipe, String> {
 
-	List<Recipe> removeRecipeById(String id);
+	Recipe deleteRecipeById(String id);
 }

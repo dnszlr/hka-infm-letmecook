@@ -14,11 +14,23 @@ public class RecipeResponse {
 		this.shoppingList = shoppingList;
 	}
 
-	public void setShoppingList(List<Ingredient> shoppingList) {
-		this.shoppingList = shoppingList;
+	public Recipe getRecipe() {
+		return recipe;
+	}
+
+	public List<Ingredient> getAvailableIngredient() {
+		return availableIngredient;
 	}
 
 	public void setAvailableIngredient(List<Ingredient> availableIngredient) {
 		this.availableIngredient = availableIngredient;
+	}
+
+	public List<Ingredient> getShoppingList() {
+		return shoppingList;
+	}
+
+	public void setShoppingList(List<Ingredient> shoppingList) {
+		this.shoppingList = shoppingList;
 	}
 }

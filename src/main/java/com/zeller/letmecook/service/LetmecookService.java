@@ -29,6 +29,7 @@ public class LetmecookService {
 	 * ### Recipe Logic  ####
 	 * ######################
 	 */
+
 	public List<Recipe> getAllRecipes() {
 		return recipeRepository.findAll();
 	}
@@ -38,12 +39,24 @@ public class LetmecookService {
 	}
 
 	public List<Recipe> removeRecipe(String id) {
-		return recipeRepository.removeRecipeById(id);
+		recipeRepository.deleteRecipeById(id);
+		return getAllRecipes();
 	}
 
 	public List<Recipe> createRecipes(List<Recipe> recipes) {
 		return recipeRepository.saveAll(recipes);
 	}
+
+	// TODO Delete, just for dev
+	public void deleteAll() {
+		recipeRepository.deleteAll();
+	}
+
+	/**
+	 * ######################
+	 * ####  Query APIs  ####
+	 * ######################
+	 */
 
 	/**
 	 * Accepts any fridge id and determines a random recipe for the ingredients it contains.
@@ -52,11 +65,11 @@ public class LetmecookService {
 	 * @return A random recipe
 	 */
 	public Optional<RecipeResponse> determineRandomRecipe(String id) {
-		return fridgeRepository.getFridgeById(id)
+		return fridgeRepository.findFridgeById(id)
 				.map(fridge -> {
 					List<String> groceryNames = getGroceryNames(fridge.getGroceries());
 					List<Recipe> randomRecipes = new ArrayList<>();
-					for(Recipe recipe : this.getAllRecipes()) {
+					for(Recipe recipe : getAllRecipes()) {
 						if(containsAnyIngredientInGroceryList(groceryNames, recipe.getIngredients())) {
 							randomRecipes.add(recipe);
 						}
@@ -76,7 +89,10 @@ public class LetmecookService {
 	 * @return true if at least one ingredient is contained in the grocery names list, false otherwise
 	 */
 	public boolean containsAnyIngredientInGroceryList(List<String> groceryNames, List<Ingredient> ingredients) {
-		return ingredients.stream().map(Ingredient::getName).anyMatch(groceryNames::contains);
+		return groceryNames.stream()
+				.anyMatch(groceryName -> ingredients.stream()
+						.map(Ingredient::getName)
+						.anyMatch(ingredientName -> groceryName.toLowerCase().contains(ingredientName.toLowerCase())));
 	}
 
 
@@ -90,12 +106,12 @@ public class LetmecookService {
 	 *         if the fridge with the given ID cannot be found
 	 */
 	public Optional<RecipeResponse> determineBestRecipe(String id) {
-		return fridgeRepository.getFridgeById(id)
+		return fridgeRepository.findFridgeById(id)
 				.map(fridge -> {
 					List<String> groceryNames = getGroceryNames(fridge.getGroceries());
 					List<RecipeResponse> bestRecipes = new ArrayList<>();
 					long maxCounter = 0;
-					for(Recipe recipe : this.getAllRecipes()) {
+					for(Recipe recipe : getAllRecipes()) {
 						Pair<List<Ingredient>, List<Ingredient>> sortedIngredients = sortIngredients(groceryNames, recipe.getIngredients());
 						List<Ingredient> availableIngredients = sortedIngredients.getFirst();
 						List<Ingredient> missingIngredients = sortedIngredients.getSecond();
@@ -122,7 +138,7 @@ public class LetmecookService {
 		List<Ingredient> missingIngredients = new ArrayList<>();
 		List<Ingredient> matchingIngredients = new ArrayList<>();
 		for(Ingredient ingredient : ingredients) {
-			if(groceryNames.contains(ingredient.getName())) {
+			if(groceryNames.stream().anyMatch(groceryName -> groceryName.toLowerCase().contains(ingredient.getName().toLowerCase()))) {
 				matchingIngredients.add(ingredient);
 			} else {
 				missingIngredients.add(ingredient);
@@ -152,16 +168,20 @@ public class LetmecookService {
 	}
 	public Optional<Fridge> getFridge(String id) {
 
-		return fridgeRepository.getFridgeById(id);
+		return fridgeRepository.findFridgeById(id);
+	}
+
+	public List<Fridge> getAllFridges() {
+		return fridgeRepository.findAll();
 	}
 
 	public float determineWasteAmount(String id) {
 
-		return fridgeRepository.getFridgeById(id).map(Fridge::getWasteAmount).orElse(0.0f);
+		return fridgeRepository.findFridgeById(id).map(Fridge::getWasteAmount).orElse(0.0f);
 	}
 
 	public Optional<Fridge> addGroceriesToFridge(String id, List<Grocery> groceries) {
-		return fridgeRepository.getFridgeById(id)
+		return fridgeRepository.findFridgeById(id)
 				.filter(fridge -> fridge.getGroceries().addAll(groceries))
 				.map(fridgeRepository::save);
 	}
@@ -174,14 +194,15 @@ public class LetmecookService {
 	 * @return An optional containing the updated fridge, or an empty optional if the fridge was not found or if the grocery was not found in the fridge.
 	 */
 	public Optional<Fridge> removeGroceryFromFridge(String id, String name) {
-		return fridgeRepository.getFridgeById(id)
+		return fridgeRepository.findFridgeById(id)
 				.map(fridge -> {
 					Grocery groceryToBeRemoved = fridge.getGroceries().stream()
 							.filter(grocery -> Objects.equals(grocery.getName(), name))
 							.findFirst().orElse(null);
 					logger.info("LetmecookService#removeGroceryFromFridge#groceryToBeRemoved: " + groceryToBeRemoved);
 					if (groceryToBeRemoved != null) {
-						fridge.setWasteAmount(groceryToBeRemoved.getPrice());
+						float wasteAmount = fridge.getWasteAmount() + groceryToBeRemoved.getPrice();
+						fridge.setWasteAmount(wasteAmount);
 						fridge.getGroceries().remove(groceryToBeRemoved);
 						logger.info("LetmecookService#removeGroceryFromFridge#fridge: " + fridge);
 						fridge = fridgeRepository.save(fridge);

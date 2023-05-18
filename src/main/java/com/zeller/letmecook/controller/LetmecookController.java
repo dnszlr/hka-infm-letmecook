@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lmc")
+@RequestMapping()
 public class LetmecookController {
 
 	private final Logger logger;
@@ -30,6 +30,7 @@ public class LetmecookController {
 	 * #### Recipe APIs #####
 	 * ######################
 	 */
+
 	@GetMapping("/recipes")
 	public List<Recipe> getRecipes() {
 		logger.info("LetmecookController#getRecipes#call");
@@ -57,10 +58,20 @@ public class LetmecookController {
 	}
 
 	/**
+	 * Only for development TODO delete
+	 */
+	@GetMapping("/recipes/deleteall")
+	public void deleteAllForDev() {
+		logger.info("LetmecookController#deleteAllForDev");
+		letmecookService.deleteAll();
+	}
+
+	/**
 	 * ######################
 	 * ####  Query APIs  ####
 	 * ######################
 	 */
+
 	@GetMapping("/fridges/{id}/random")
 	public ResponseEntity<RecipeResponse> getRandomRecipe(@PathVariable String id) {
 		logger.info("LetmecookController#getRandomRecipe#call");
@@ -82,6 +93,13 @@ public class LetmecookController {
 	 * #### Fridge APIs  ####
 	 * ######################
 	 */
+
+	@GetMapping("/fridges")
+	public List<Fridge> getAllFridges() {
+		logger.info("LetmecookController#getAllFridges#call");
+		return letmecookService.getAllFridges();
+	}
+
 	@GetMapping("/fridges/{id}")
 	public ResponseEntity<Fridge> getFridge(@PathVariable String id) {
 		logger.info("LetmecookController#getFridge#call#" + id);
@@ -91,7 +109,7 @@ public class LetmecookController {
 	}
 
 	@PostMapping("/fridges")
-	public ResponseEntity<Fridge> createFridge() {
+	public ResponseEntity<Fridge> postFridge() {
 		return letmecookService.createFridge()
 				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -116,5 +134,4 @@ public class LetmecookController {
 		logger.info("LetmecookController#deleteGroceryById#call#" + id + "#" + name);
 		return letmecookService.removeGroceryFromFridge(id, name).map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
-
 }
