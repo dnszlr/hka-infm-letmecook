@@ -1,0 +1,299 @@
+{
+	"info": {
+		"_postman_id": "0e2a5b19-c5d6-430a-b85a-96c2c3e6fa71",
+		"name": "Seminararbeit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11975490"
+	},
+	"item": [
+		{
+			"name": "recipes",
+			"item": [
+				{
+					"name": "getRecipes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/recipes",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postRecipe",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Spaghetti Bolognese\",\r\n  \"ingredients\": [\r\n    { \"name\": \"ground beef\", \"amount\": 500, \"unit\": \"grams\" },\r\n    { \"name\": \"spaghetti\", \"amount\": 300, \"unit\": \"grams\" },\r\n    { \"name\": \"tomato sauce\", \"amount\": 400, \"unit\": \"milliliters\" },\r\n    { \"name\": \"onion\", \"amount\": 1, \"unit\": \"small\" },\r\n    { \"name\": \"garlic cloves\", \"amount\": 2, \"unit\": \"pieces\" },\r\n    { \"name\": \"olive oil\", \"amount\": 2, \"unit\": \"tablespoons\" }\r\n  ],\r\n  \"description\": \"Spaghetti Bolognese is a classic Italian dish made with ground beef, tomato sauce, onions, garlic, and served over spaghetti.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/recipes",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteRecipe (TODO ID)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/recipes/6465e7918b48d441c24ca1b1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"6465e7918b48d441c24ca1b1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "importRecipes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"name\": \"Spaghetti Bolognese\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"ground beef\",\r\n        \"amount\": 500,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"spaghetti\",\r\n        \"amount\": 300,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"tomato sauce\",\r\n        \"amount\": 400,\r\n        \"unit\": \"milliliters\"\r\n      },\r\n      {\r\n        \"name\": \"onion\",\r\n        \"amount\": 1,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"garlic cloves\",\r\n        \"amount\": 2,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"olive oil\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Spaghetti Bolognese is a classic Italian dish made with ground beef, tomato sauce, onions, garlic, and served over spaghetti.\"\r\n  },\r\n  {\r\n    \"name\": \"Chicken Stir-Fry\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"chicken breast\",\r\n        \"amount\": 2,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"bell peppers\",\r\n        \"amount\": 2,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"broccoli florets\",\r\n        \"amount\": 1,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"soy sauce\",\r\n        \"amount\": 3,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"garlic powder\",\r\n        \"amount\": 1,\r\n        \"unit\": \"teaspoons\"\r\n      },\r\n      {\r\n        \"name\": \"vegetable oil\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Chicken Stir-Fry is a quick and flavorful dish made with chicken, bell peppers, broccoli, soy sauce, and garlic powder.\"\r\n  },\r\n  {\r\n    \"name\": \"Mushroom Risotto\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"arborio rice\",\r\n        \"amount\": 1,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"mushrooms\",\r\n        \"amount\": 200,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"vegetable broth\",\r\n        \"amount\": 2,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"onion\",\r\n        \"amount\": 1,\r\n        \"unit\": \"small\"\r\n      },\r\n      {\r\n        \"name\": \"parmesan cheese\",\r\n        \"amount\": 1,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"butter\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Mushroom Risotto is a creamy Italian rice dish made with Arborio rice, mushrooms, vegetable broth, onions, parmesan cheese, and butter.\"\r\n  },\r\n  {\r\n    \"name\": \"Beef Stir-Fry\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"beef sirloin\",\r\n        \"amount\": 400,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"broccoli florets\",\r\n        \"amount\": 2,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"carrots\",\r\n        \"amount\": 2,\r\n        \"unit\": \"medium\"\r\n      },\r\n      {\r\n        \"name\": \"soy sauce\",\r\n        \"amount\": 3,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"ginger\",\r\n        \"amount\": 1,\r\n        \"unit\": \"teaspoons\"\r\n      },\r\n      {\r\n        \"name\": \"vegetable oil\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Beef Stir-Fry is a flavorful dish made with beef sirloin, broccoli, carrots, soy sauce, ginger, and vegetable oil.\"\r\n  },\r\n  {\r\n    \"name\": \"Pesto Pasta\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"penne pasta\",\r\n        \"amount\": 300,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"basil leaves\",\r\n        \"amount\": 2,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"pine nuts\",\r\n        \"amount\": 1,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"garlic cloves\",\r\n        \"amount\": 2,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"olive oil\",\r\n        \"amount\": 0.5,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"parmesan cheese\",\r\n        \"amount\": 0.5,\r\n        \"unit\": \"cups\"\r\n      }\r\n    ],\r\n    \"description\": \"Pesto Pasta is a delicious Italian dish made with penne pasta, basil leaves, pine nuts, garlic, olive oil, and parmesan cheese.\"\r\n  },\r\n  {\r\n    \"name\": \"Teriyaki Salmon\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"salmon fillets\",\r\n        \"amount\": 4,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"teriyaki sauce\",\r\n        \"amount\": 0.25,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"green onions\",\r\n        \"amount\": 2,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"sesame seeds\",\r\n        \"amount\": 1,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"vegetable oil\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"salt\",\r\n        \"amount\": 0.5,\r\n        \"unit\": \"teaspoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Teriyaki Salmon is a tasty dish made with salmon fillets, teriyaki sauce, green onions, sesame seeds, vegetable oil, and salt.\"\r\n  },\r\n  {\r\n    \"name\": \"Lemon Herb Roasted Chicken\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"whole chicken\",\r\n        \"amount\": 1,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"lemon\",\r\n        \"amount\": 1,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"fresh thyme\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"garlic cloves\",\r\n        \"amount\": 4,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"olive oil\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"salt\",\r\n        \"amount\": 1,\r\n        \"unit\": \"teaspoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Lemon Herb Roasted Chicken is a flavorful dish made with a whole chicken, lemon, fresh thyme, garlic, olive oil, and salt.\"\r\n  },\r\n  {\r\n    \"name\": \"Beef and Broccoli Stir-Fry\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"beef sirloin\",\r\n        \"amount\": 400,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"broccoli florets\",\r\n        \"amount\": 2,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"soy sauce\",\r\n        \"amount\": 4,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"garlic\",\r\n        \"amount\": 3,\r\n        \"unit\": \"cloves\"\r\n      },\r\n      {\r\n        \"name\": \"sesame oil\",\r\n        \"amount\": 1,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"cornstarch\",\r\n        \"amount\": 1,\r\n        \"unit\": \"tablespoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Beef and Broccoli Stir-Fry is a tasty dish made with beef sirloin, broccoli florets, soy sauce, garlic, sesame oil, and cornstarch.\"\r\n  },\r\n  {\r\n    \"name\": \"Shrimp Scampi\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"shrimp\",\r\n        \"amount\": 500,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"garlic\",\r\n        \"amount\": 4,\r\n        \"unit\": \"cloves\"\r\n      },\r\n      {\r\n        \"name\": \"lemon juice\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"butter\",\r\n        \"amount\": 3,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"white wine\",\r\n        \"amount\": 0.25,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"parsley\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Shrimp Scampi is a delicious dish made with shrimp, garlic, lemon juice, butter, white wine, and parsley.\"\r\n  },\r\n  {\r\n    \"name\": \"Spinach and Feta Stuffed Chicken Breast\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"chicken breast\",\r\n        \"amount\": 4,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"spinach\",\r\n        \"amount\": 2,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"feta cheese\",\r\n        \"amount\": 0.5,\r\n        \"unit\": \"cups\"\r\n      }\r\n    ],\r\n    \"description\": \"Spinach and Feta Stuffed Chicken Breast is a delicious dish made with chicken breast, spinach, and feta cheese. The chicken breasts are stuffed with a mixture of spinach and feta cheese, then baked to perfection.\"\r\n  },\r\n  {\r\n    \"name\": \"Baked Salmon with Dill\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"salmon fillets\",\r\n        \"amount\": 4,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"fresh dill\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"lemon\",\r\n        \"amount\": 1,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"olive oil\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"salt\",\r\n        \"amount\": 1,\r\n        \"unit\": \"teaspoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Baked Salmon with Dill is a simple and flavorful dish. The salmon fillets are seasoned with fresh dill, lemon, olive oil, and salt, then baked to perfection.\"\r\n  },\r\n  {\r\n    \"name\": \"Vegetable Stir-Fry\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"mixed vegetables\",\r\n        \"amount\": 4,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"soy sauce\",\r\n        \"amount\": 3,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"garlic\",\r\n        \"amount\": 3,\r\n        \"unit\": \"cloves\"\r\n      },\r\n      {\r\n        \"name\": \"ginger\",\r\n        \"amount\": 1,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"vegetable oil\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Vegetable Stir-Fry is a healthy and delicious dish made with a variety of mixed vegetables, soy sauce, garlic, ginger, and vegetable oil.\"\r\n  },\r\n  {\r\n    \"name\": \"Lemon Herb Grilled Chicken\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"chicken breasts\",\r\n        \"amount\": 4,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"lemon\",\r\n        \"amount\": 1,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"fresh herbs (e.g., rosemary, thyme)\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"olive oil\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"salt\",\r\n        \"amount\": 1,\r\n        \"unit\": \"teaspoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Lemon Herb Grilled Chicken is a flavorful dish perfect for summer. The chicken breasts are marinated with lemon, fresh herbs, olive oil, and salt, then grilled to perfection.\"\r\n  },\r\n  {\r\n    \"name\": \"Caprese Salad\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"tomatoes\",\r\n        \"amount\": 4,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"mozzarella cheese\",\r\n        \"amount\": 200,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"fresh basil leaves\",\r\n        \"amount\": 0.5,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"balsamic vinegar\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"olive oil\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Caprese Salad is a simple and refreshing salad made with ripe tomatoes, mozzarella cheese, fresh basil leaves, balsamic vinegar, and olive oil.\"\r\n  },\r\n  {\r\n    \"name\": \"Spaghetti Carbonara\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"spaghetti\",\r\n        \"amount\": 300,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"bacon\",\r\n        \"amount\": 150,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"eggs\",\r\n        \"amount\": 3,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"parmesan cheese\",\r\n        \"amount\": 100,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"black pepper\",\r\n        \"amount\": 1,\r\n        \"unit\": \"teaspoons\"\r\n      },\r\n      {\r\n        \"name\": \"salt\",\r\n        \"amount\": 1,\r\n        \"unit\": \"teaspoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Spaghetti Carbonara is a classic Italian pasta dish made with spaghetti, bacon, eggs, parmesan cheese, black pepper, and salt. It's a creamy and flavorful dish that is quick and easy to prepare.\"\r\n  },\r\n  {\r\n    \"name\": \"Honey Mustard Chicken\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"chicken breasts\",\r\n        \"amount\": 4,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"honey\",\r\n        \"amount\": 3,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"dijon mustard\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"lemon juice\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"garlic powder\",\r\n        \"amount\": 1,\r\n        \"unit\": \"teaspoons\"\r\n      },\r\n      {\r\n        \"name\": \"salt\",\r\n        \"amount\": 1,\r\n        \"unit\": \"teaspoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Honey Mustard Chicken is a sweet and tangy chicken dish made with honey, Dijon mustard, lemon juice, garlic powder, and salt. The chicken breasts are coated in the flavorful sauce and baked to perfection.\"\r\n  },\r\n  {\r\n    \"name\": \"Vegetable Curry\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"mixed vegetables\",\r\n        \"amount\": 500,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"coconut milk\",\r\n        \"amount\": 1,\r\n        \"unit\": \"can\"\r\n      },\r\n      {\r\n        \"name\": \"curry powder\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"onion\",\r\n        \"amount\": 1,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"garlic\",\r\n        \"amount\": 3,\r\n        \"unit\": \"cloves\"\r\n      },\r\n      {\r\n        \"name\": \"ginger\",\r\n        \"amount\": 1,\r\n        \"unit\": \"tablespoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Vegetable Curry is a flavorful and aromatic curry made with mixed vegetables, coconut milk, curry powder, onion, garlic, and ginger. It's a satisfying and comforting dish that is perfect for vegetarians.\"\r\n  },\r\n  {\r\n    \"name\": \"Lemon Garlic Roasted Chicken\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"whole chicken\",\r\n        \"amount\": 1,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"lemon\",\r\n        \"amount\": 1,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"garlic\",\r\n        \"amount\": 6,\r\n        \"unit\": \"cloves\"\r\n      },\r\n      {\r\n        \"name\": \"olive oil\",\r\n        \"amount\": 3,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"rosemary\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"salt\",\r\n        \"amount\": 1,\r\n        \"unit\": \"teaspoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Lemon Garlic Roasted Chicken is a flavorful and tender roasted chicken dish. The chicken is seasoned with lemon, garlic, olive oil, rosemary, and salt, then roasted to perfection.\"\r\n  },\r\n  {\r\n    \"name\": \"Beef Tacos\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"beef\",\r\n        \"amount\": 500,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"tortillas\",\r\n        \"amount\": 8,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"onion\",\r\n        \"amount\": 1,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"bell peppers\",\r\n        \"amount\": 2,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"taco seasoning\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      },\r\n      {\r\n        \"name\": \"sour cream\",\r\n        \"amount\": 0.5,\r\n        \"unit\": \"cups\"\r\n      }\r\n    ],\r\n    \"description\": \"Beef Tacos are a classic Mexican dish made with seasoned beef, tortillas, onion, bell peppers, taco seasoning, and sour cream. They are a delicious and satisfying option for a quick and flavorful meal.\"\r\n  },\r\n  {\r\n    \"name\": \"Chicken Parmesan\",\r\n    \"ingredients\": [\r\n      {\r\n        \"name\": \"chicken breasts\",\r\n        \"amount\": 4,\r\n        \"unit\": \"pieces\"\r\n      },\r\n      {\r\n        \"name\": \"breadcrumbs\",\r\n        \"amount\": 1,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"parmesan cheese\",\r\n        \"amount\": 0.5,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"tomato sauce\",\r\n        \"amount\": 2,\r\n        \"unit\": \"cups\"\r\n      },\r\n      {\r\n        \"name\": \"mozzarella cheese\",\r\n        \"amount\": 200,\r\n        \"unit\": \"grams\"\r\n      },\r\n      {\r\n        \"name\": \"olive oil\",\r\n        \"amount\": 2,\r\n        \"unit\": \"tablespoons\"\r\n      }\r\n    ],\r\n    \"description\": \"Chicken Parmesan is a classic Italian dish made with breaded chicken breasts, tomato sauce, parmesan cheese, and mozzarella cheese. The chicken is baked until golden and crispy, then topped with melted cheese and served with pasta.\"\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/recipes/import",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"import"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllForDev",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/recipes/deleteall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"recipes",
+								"deleteall"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "fridges",
+			"item": [
+				{
+					"name": "getFridge (TODO ID)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/fridges/6465f0bc9b0019192a9a19c3",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fridges",
+								"6465f0bc9b0019192a9a19c3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllFridges",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "postFridge",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/fridges",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fridges"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getWasteAmount (TODO ID)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/fridges/6465f0bc9b0019192a9a19c3/waste",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fridges",
+								"6465f0bc9b0019192a9a19c3",
+								"waste"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postGroceries (TODO ID)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n  \"name\": \"spaghetti\",\r\n  \"amount\": 700,\r\n  \"unit\": \"grams\",\r\n  \"price\": 2.29,\r\n  \"purchase\": \"2023-05-15\",\r\n  \"expiration\": \"2023-05-30\"\r\n},\r\n{\r\n  \"name\": \"onion\",\r\n  \"amount\": 10.0,\r\n  \"unit\": \"pieces\",\r\n  \"price\": 0.99,\r\n  \"purchase\": \"2023-05-14\",\r\n  \"expiration\": \"2023-05-25\"\r\n},\r\n{\r\n  \"name\": \"salt\",\r\n  \"amount\": 0.45,\r\n  \"unit\": \"grams\",\r\n  \"price\": 0.99,\r\n  \"purchase\": \"2023-05-13\",\r\n  \"expiration\": \"2024-05-22\"\r\n},\r\n{\r\n  \"name\": \"olive oil\",\r\n  \"amount\": 0.75,\r\n  \"unit\": \"liter\",\r\n  \"price\": 4.99,\r\n  \"purchase\": \"2023-05-12\",\r\n  \"expiration\": \"2024-01-01\"\r\n}\r\n\r\n\r\n\r\n\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/fridges/646654cd10949d44ee73650a/groceries",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fridges",
+								"646654cd10949d44ee73650a",
+								"groceries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteGroceryByName (TODO ID AND NAME)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/fridges/64663e48cf00e773b126e971/groceries/salt",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fridges",
+								"64663e48cf00e773b126e971",
+								"groceries",
+								"salt"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "queries",
+			"item": [
+				{
+					"name": "getRandomRecipe (TODO ID)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/fridges/64663e48cf00e773b126e971/random",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fridges",
+								"64663e48cf00e773b126e971",
+								"random"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBestRecipe (TODO ID)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8000/fridges/64663e48cf00e773b126e971/best",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fridges",
+								"64663e48cf00e773b126e971",
+								"best"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
