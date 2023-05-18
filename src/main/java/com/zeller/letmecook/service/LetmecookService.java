@@ -70,8 +70,9 @@ public class LetmecookService {
 					List<String> groceryNames = getGroceryNames(fridge.getGroceries());
 					List<Recipe> randomRecipes = new ArrayList<>();
 					for(Recipe recipe : getAllRecipes()) {
-						// checks that at least one ingredient of the recipe matches one of the groceries
-						if(containsAnyIngredientInGroceryList(groceryNames, recipe.getIngredients())) {
+						// checks if at least one ingredient of the recipe matches one of the groceries
+						// stream is used here to make use of anyMatch, the stream stops if a matching ingredient is found
+						if(recipe.getIngredients().stream().anyMatch(ingredient -> containsIngredientInGroceryList(groceryNames, ingredient))) {
 							randomRecipes.add(recipe);
 						}
 					}
@@ -82,21 +83,6 @@ public class LetmecookService {
 					// determine a random recipe from all randomRecipes
 					return new RecipeResponse(recipe, sortedIngredients.getFirst(), sortedIngredients.getSecond());
 				});
-	}
-
-	/**
-	 * Determines if any ingredient from a list of ingredients is contained at least once
-	 * in a list of grocery names.
-	 *
-	 * @param groceryNames the list of grocery names
-	 * @param ingredients the list of ingredients to check
-	 * @return true if at least one ingredient is contained in the grocery names list, false otherwise
-	 */
-	public boolean containsAnyIngredientInGroceryList(List<String> groceryNames, List<Ingredient> ingredients) {
-		return groceryNames.stream()
-				.anyMatch(groceryName -> ingredients.stream()
-						.map(Ingredient::getName)
-						.anyMatch(ingredientName -> groceryName.toLowerCase().contains(ingredientName.toLowerCase())));
 	}
 
 	/**
@@ -144,13 +130,24 @@ public class LetmecookService {
 		List<Ingredient> missingIngredients = new ArrayList<>();
 		List<Ingredient> matchingIngredients = new ArrayList<>();
 		for(Ingredient ingredient : ingredients) {
-			if(groceryNames.stream().anyMatch(groceryName -> groceryName.toLowerCase().contains(ingredient.getName().toLowerCase()))) {
+			if(containsIngredientInGroceryList(groceryNames, ingredient)) {
 				matchingIngredients.add(ingredient);
 			} else {
 				missingIngredients.add(ingredient);
 			}
 		}
 		return Pair.of(matchingIngredients, missingIngredients);
+	}
+
+	/**
+	 * Determines if the ingredient is contained at least once in a list of grocery names.
+	 *
+	 * @param groceryNames the list of grocery names
+	 * @param ingredient the ingredients to check
+	 * @return true if at least one ingredient is contained in the grocery names list, false otherwise
+	 */
+	public boolean containsIngredientInGroceryList(List<String> groceryNames, Ingredient ingredient) {
+		return groceryNames.stream().anyMatch(groceryName -> groceryName.toLowerCase().contains(ingredient.getName().toLowerCase()));
 	}
 
 	/**
