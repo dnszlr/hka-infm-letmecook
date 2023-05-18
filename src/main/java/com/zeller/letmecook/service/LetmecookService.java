@@ -70,12 +70,16 @@ public class LetmecookService {
 					List<String> groceryNames = getGroceryNames(fridge.getGroceries());
 					List<Recipe> randomRecipes = new ArrayList<>();
 					for(Recipe recipe : getAllRecipes()) {
+						// checks that at least one ingredient of the recipe matches one of the groceries
 						if(containsAnyIngredientInGroceryList(groceryNames, recipe.getIngredients())) {
 							randomRecipes.add(recipe);
 						}
 					}
 					Recipe recipe = randomRecipes.get(RandomGenerator.generateBetweenZeroAnd(randomRecipes.size()));
+					// This seems redundant, but it makes more sense to determine the missingIngredients
+					// and matchingIngredients only once for the random recipe.
 					Pair<List<Ingredient>, List<Ingredient>> sortedIngredients = sortIngredients(groceryNames, recipe.getIngredients());
+					// determine a random recipe from all randomRecipes
 					return new RecipeResponse(recipe, sortedIngredients.getFirst(), sortedIngredients.getSecond());
 				});
 	}
@@ -116,13 +120,16 @@ public class LetmecookService {
 						List<Ingredient> missingIngredients = sortedIngredients.getSecond();
 						int counter = availableIngredients.size();
 						if(counter == maxCounter) {
+							// if the counter is equal, the recipe is added to the stored data
 							bestRecipes.add(new RecipeResponse(recipe, availableIngredients, missingIngredients));
 						} else if(counter > maxCounter) {
+							// if the counter is greater than the current maxCounter, the stored data is reset
 							maxCounter = counter;
 							bestRecipes.clear();
 							bestRecipes.add(new RecipeResponse(recipe, availableIngredients, missingIngredients));
 						}
 					}
+					// determine a best recipe from all best recipes
 					return bestRecipes.get(RandomGenerator.generateBetweenZeroAnd(bestRecipes.size()));
 				});
 	}

@@ -27,7 +27,7 @@ public class LetmecookController {
 	public LetmecookController(LetmecookService letmecookService) {
 		this.logger = LoggerFactory.getLogger(LetmecookController.class);
 		this.letmecookService = letmecookService;
-		apiCounter = Metrics.counter("letmecook.api.counter");
+		this.apiCounter = Metrics.counter("letmecook.api.counter");
 	}
 
 	/**
