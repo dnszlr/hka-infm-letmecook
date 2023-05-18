@@ -54,7 +54,7 @@ public class LetmecookService {
 
 	/**
 	 * ######################
-	 * ####  Query APIs  ####
+	 * ####  Query Logic  ####
 	 * ######################
 	 */
 
@@ -94,7 +94,6 @@ public class LetmecookService {
 						.map(Ingredient::getName)
 						.anyMatch(ingredientName -> groceryName.toLowerCase().contains(ingredientName.toLowerCase())));
 	}
-
 
 	/**
 	 * Returns an optional containing a randomly selected best recipe based on the ingredients
@@ -190,19 +189,18 @@ public class LetmecookService {
 	 * The method also increases the wasteAmount of the fridge by the price of the removed grocery.
 	 *
 	 * @param id   The id of the fridge to remove the grocery from.
-	 * @param name The name of the grocery to be removed.
+	 * @param groceryName The name of the grocery to be removed.
 	 * @return An optional containing the updated fridge, or an empty optional if the fridge was not found or if the grocery was not found in the fridge.
 	 */
-	public Optional<Fridge> removeGroceryFromFridge(String id, String name) {
+	public Optional<Fridge> removeGroceryFromFridge(String id, String groceryName) {
 		return fridgeRepository.findFridgeById(id)
 				.map(fridge -> {
 					Grocery groceryToBeRemoved = fridge.getGroceries().stream()
-							.filter(grocery -> Objects.equals(grocery.getName(), name))
+							.filter(grocery -> Objects.equals(grocery.getName(), groceryName))
 							.findFirst().orElse(null);
 					logger.info("LetmecookService#removeGroceryFromFridge#groceryToBeRemoved: " + groceryToBeRemoved);
 					if (groceryToBeRemoved != null) {
-						float wasteAmount = fridge.getWasteAmount() + groceryToBeRemoved.getPrice();
-						fridge.setWasteAmount(wasteAmount);
+						fridge.setWasteAmount(fridge.getWasteAmount() + groceryToBeRemoved.getPrice());
 						fridge.getGroceries().remove(groceryToBeRemoved);
 						logger.info("LetmecookService#removeGroceryFromFridge#fridge: " + fridge);
 						fridge = fridgeRepository.save(fridge);
