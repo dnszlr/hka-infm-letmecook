@@ -74,7 +74,7 @@ public class LetmecookService {
 							randomRecipes.add(recipe);
 						}
 					}
-					Recipe recipe = randomRecipes.get(RandomGenerator.generate(0, randomRecipes.size()));
+					Recipe recipe = randomRecipes.get(RandomGenerator.generateBetweenZeroAnd(randomRecipes.size()));
 					Pair<List<Ingredient>, List<Ingredient>> sortedIngredients = sortIngredients(groceryNames, recipe.getIngredients());
 					return new RecipeResponse(recipe, sortedIngredients.getFirst(), sortedIngredients.getSecond());
 				});
@@ -124,7 +124,7 @@ public class LetmecookService {
 							bestRecipes.add(new RecipeResponse(recipe, availableIngredients, missingIngredients));
 						}
 					}
-					return bestRecipes.get(RandomGenerator.generate(0, bestRecipes.size()));
+					return bestRecipes.get(RandomGenerator.generateBetweenZeroAnd(bestRecipes.size()));
 				});
 	}
 
