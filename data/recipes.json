@@ -1,0 +1,687 @@
+[
+  {
+    "name": "Spaghetti Bolognese",
+    "ingredients": [
+      {
+        "name": "ground beef",
+        "amount": 500,
+        "unit": "grams"
+      },
+      {
+        "name": "spaghetti",
+        "amount": 300,
+        "unit": "grams"
+      },
+      {
+        "name": "tomato sauce",
+        "amount": 400,
+        "unit": "milliliters"
+      },
+      {
+        "name": "onion",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "garlic cloves",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "olive oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Spaghetti Bolognese is a classic Italian dish made with ground beef, tomato sauce, onions, garlic, and served over spaghetti."
+  },
+  {
+    "name": "Chicken Stir-Fry",
+    "ingredients": [
+      {
+        "name": "chicken breast",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "bell peppers",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "broccoli florets",
+        "amount": 1,
+        "unit": "cups"
+      },
+      {
+        "name": "soy sauce",
+        "amount": 3,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "garlic powder",
+        "amount": 1,
+        "unit": "teaspoons"
+      },
+      {
+        "name": "vegetable oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Chicken Stir-Fry is a quick and flavorful dish made with chicken, bell peppers, broccoli, soy sauce, and garlic powder."
+  },
+  {
+    "name": "Mushroom Risotto",
+    "ingredients": [
+      {
+        "name": "arborio rice",
+        "amount": 1,
+        "unit": "cups"
+      },
+      {
+        "name": "mushrooms",
+        "amount": 200,
+        "unit": "grams"
+      },
+      {
+        "name": "vegetable broth",
+        "amount": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "onion",
+        "amount": 1,
+        "unit": "small"
+      },
+      {
+        "name": "parmesan cheese",
+        "amount": 1,
+        "unit": "cups"
+      },
+      {
+        "name": "butter",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Mushroom Risotto is a creamy Italian rice dish made with Arborio rice, mushrooms, vegetable broth, onions, parmesan cheese, and butter."
+  },
+  {
+    "name": "Beef Stir-Fry",
+    "ingredients": [
+      {
+        "name": "beef sirloin",
+        "amount": 400,
+        "unit": "grams"
+      },
+      {
+        "name": "broccoli florets",
+        "amount": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "carrots",
+        "amount": 2,
+        "unit": "medium"
+      },
+      {
+        "name": "soy sauce",
+        "amount": 3,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "ginger",
+        "amount": 1,
+        "unit": "teaspoons"
+      },
+      {
+        "name": "vegetable oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Beef Stir-Fry is a flavorful dish made with beef sirloin, broccoli, carrots, soy sauce, ginger, and vegetable oil."
+  },
+  {
+    "name": "Pesto Pasta",
+    "ingredients": [
+      {
+        "name": "penne pasta",
+        "amount": 300,
+        "unit": "grams"
+      },
+      {
+        "name": "basil leaves",
+        "amount": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "pine nuts",
+        "amount": 1,
+        "unit": "cups"
+      },
+      {
+        "name": "garlic cloves",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "olive oil",
+        "amount": 0.5,
+        "unit": "cups"
+      },
+      {
+        "name": "parmesan cheese",
+        "amount": 0.5,
+        "unit": "cups"
+      }
+    ],
+    "description": "Pesto Pasta is a delicious Italian dish made with penne pasta, basil leaves, pine nuts, garlic, olive oil, and parmesan cheese."
+  },
+  {
+    "name": "Teriyaki Salmon",
+    "ingredients": [
+      {
+        "name": "salmon fillets",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "teriyaki sauce",
+        "amount": 0.25,
+        "unit": "cups"
+      },
+      {
+        "name": "green onions",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "sesame seeds",
+        "amount": 1,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "vegetable oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "salt",
+        "amount": 0.5,
+        "unit": "teaspoons"
+      }
+    ],
+    "description": "Teriyaki Salmon is a tasty dish made with salmon fillets, teriyaki sauce, green onions, sesame seeds, vegetable oil, and salt."
+  },
+  {
+    "name": "Lemon Herb Roasted Chicken",
+    "ingredients": [
+      {
+        "name": "whole chicken",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "lemon",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "fresh thyme",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "garlic cloves",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "olive oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "salt",
+        "amount": 1,
+        "unit": "teaspoons"
+      }
+    ],
+    "description": "Lemon Herb Roasted Chicken is a flavorful dish made with a whole chicken, lemon, fresh thyme, garlic, olive oil, and salt."
+  },
+  {
+    "name": "Beef and Broccoli Stir-Fry",
+    "ingredients": [
+      {
+        "name": "beef sirloin",
+        "amount": 400,
+        "unit": "grams"
+      },
+      {
+        "name": "broccoli florets",
+        "amount": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "soy sauce",
+        "amount": 4,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "garlic",
+        "amount": 3,
+        "unit": "cloves"
+      },
+      {
+        "name": "sesame oil",
+        "amount": 1,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "cornstarch",
+        "amount": 1,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Beef and Broccoli Stir-Fry is a tasty dish made with beef sirloin, broccoli florets, soy sauce, garlic, sesame oil, and cornstarch."
+  },
+  {
+    "name": "Shrimp Scampi",
+    "ingredients": [
+      {
+        "name": "shrimp",
+        "amount": 500,
+        "unit": "grams"
+      },
+      {
+        "name": "garlic",
+        "amount": 4,
+        "unit": "cloves"
+      },
+      {
+        "name": "lemon juice",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "butter",
+        "amount": 3,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "white wine",
+        "amount": 0.25,
+        "unit": "cups"
+      },
+      {
+        "name": "parsley",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Shrimp Scampi is a delicious dish made with shrimp, garlic, lemon juice, butter, white wine, and parsley."
+  },
+  {
+    "name": "Spinach and Feta Stuffed Chicken Breast",
+    "ingredients": [
+      {
+        "name": "chicken breast",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "spinach",
+        "amount": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "feta cheese",
+        "amount": 0.5,
+        "unit": "cups"
+      }
+    ],
+    "description": "Spinach and Feta Stuffed Chicken Breast is a delicious dish made with chicken breast, spinach, and feta cheese. The chicken breasts are stuffed with a mixture of spinach and feta cheese, then baked to perfection."
+  },
+  {
+    "name": "Baked Salmon with Dill",
+    "ingredients": [
+      {
+        "name": "salmon fillets",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "fresh dill",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "lemon",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "olive oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "salt",
+        "amount": 1,
+        "unit": "teaspoons"
+      }
+    ],
+    "description": "Baked Salmon with Dill is a simple and flavorful dish. The salmon fillets are seasoned with fresh dill, lemon, olive oil, and salt, then baked to perfection."
+  },
+  {
+    "name": "Vegetable Stir-Fry",
+    "ingredients": [
+      {
+        "name": "mixed vegetables",
+        "amount": 4,
+        "unit": "cups"
+      },
+      {
+        "name": "soy sauce",
+        "amount": 3,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "garlic",
+        "amount": 3,
+        "unit": "cloves"
+      },
+      {
+        "name": "ginger",
+        "amount": 1,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "vegetable oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Vegetable Stir-Fry is a healthy and delicious dish made with a variety of mixed vegetables, soy sauce, garlic, ginger, and vegetable oil."
+  },
+  {
+    "name": "Lemon Herb Grilled Chicken",
+    "ingredients": [
+      {
+        "name": "chicken breasts",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "lemon",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "fresh herbs (e.g., rosemary, thyme)",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "olive oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "salt",
+        "amount": 1,
+        "unit": "teaspoons"
+      }
+    ],
+    "description": "Lemon Herb Grilled Chicken is a flavorful dish perfect for summer. The chicken breasts are marinated with lemon, fresh herbs, olive oil, and salt, then grilled to perfection."
+  },
+  {
+    "name": "Caprese Salad",
+    "ingredients": [
+      {
+        "name": "tomatoes",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "mozzarella cheese",
+        "amount": 200,
+        "unit": "grams"
+      },
+      {
+        "name": "fresh basil leaves",
+        "amount": 0.5,
+        "unit": "cups"
+      },
+      {
+        "name": "balsamic vinegar",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "olive oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Caprese Salad is a simple and refreshing salad made with ripe tomatoes, mozzarella cheese, fresh basil leaves, balsamic vinegar, and olive oil."
+  },
+  {
+    "name": "Spaghetti Carbonara",
+    "ingredients": [
+      {
+        "name": "spaghetti",
+        "amount": 300,
+        "unit": "grams"
+      },
+      {
+        "name": "bacon",
+        "amount": 150,
+        "unit": "grams"
+      },
+      {
+        "name": "eggs",
+        "amount": 3,
+        "unit": "pieces"
+      },
+      {
+        "name": "parmesan cheese",
+        "amount": 100,
+        "unit": "grams"
+      },
+      {
+        "name": "black pepper",
+        "amount": 1,
+        "unit": "teaspoons"
+      },
+      {
+        "name": "salt",
+        "amount": 1,
+        "unit": "teaspoons"
+      }
+    ],
+    "description": "Spaghetti Carbonara is a classic Italian pasta dish made with spaghetti, bacon, eggs, parmesan cheese, black pepper, and salt. It's a creamy and flavorful dish that is quick and easy to prepare."
+  },
+  {
+    "name": "Honey Mustard Chicken",
+    "ingredients": [
+      {
+        "name": "chicken breasts",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "honey",
+        "amount": 3,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "dijon mustard",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "lemon juice",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "garlic powder",
+        "amount": 1,
+        "unit": "teaspoons"
+      },
+      {
+        "name": "salt",
+        "amount": 1,
+        "unit": "teaspoons"
+      }
+    ],
+    "description": "Honey Mustard Chicken is a sweet and tangy chicken dish made with honey, Dijon mustard, lemon juice, garlic powder, and salt. The chicken breasts are coated in the flavorful sauce and baked to perfection."
+  },
+  {
+    "name": "Vegetable Curry",
+    "ingredients": [
+      {
+        "name": "mixed vegetables",
+        "amount": 500,
+        "unit": "grams"
+      },
+      {
+        "name": "coconut milk",
+        "amount": 1,
+        "unit": "can"
+      },
+      {
+        "name": "curry powder",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "onion",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "garlic",
+        "amount": 3,
+        "unit": "cloves"
+      },
+      {
+        "name": "ginger",
+        "amount": 1,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Vegetable Curry is a flavorful and aromatic curry made with mixed vegetables, coconut milk, curry powder, onion, garlic, and ginger. It's a satisfying and comforting dish that is perfect for vegetarians."
+  },
+  {
+    "name": "Lemon Garlic Roasted Chicken",
+    "ingredients": [
+      {
+        "name": "whole chicken",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "lemon",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "garlic",
+        "amount": 6,
+        "unit": "cloves"
+      },
+      {
+        "name": "olive oil",
+        "amount": 3,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "rosemary",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "salt",
+        "amount": 1,
+        "unit": "teaspoons"
+      }
+    ],
+    "description": "Lemon Garlic Roasted Chicken is a flavorful and tender roasted chicken dish. The chicken is seasoned with lemon, garlic, olive oil, rosemary, and salt, then roasted to perfection."
+  },
+  {
+    "name": "Beef Tacos",
+    "ingredients": [
+      {
+        "name": "beef",
+        "amount": 500,
+        "unit": "grams"
+      },
+      {
+        "name": "tortillas",
+        "amount": 8,
+        "unit": "pieces"
+      },
+      {
+        "name": "onion",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "bell peppers",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "taco seasoning",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "sour cream",
+        "amount": 0.5,
+        "unit": "cups"
+      }
+    ],
+    "description": "Beef Tacos are a classic Mexican dish made with seasoned beef, tortillas, onion, bell peppers, taco seasoning, and sour cream. They are a delicious and satisfying option for a quick and flavorful meal."
+  },
+  {
+    "name": "Chicken Parmesan",
+    "ingredients": [
+      {
+        "name": "chicken breasts",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "breadcrumbs",
+        "amount": 1,
+        "unit": "cups"
+      },
+      {
+        "name": "parmesan cheese",
+        "amount": 0.5,
+        "unit": "cups"
+      },
+      {
+        "name": "tomato sauce",
+        "amount": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "mozzarella cheese",
+        "amount": 200,
+        "unit": "grams"
+      },
+      {
+        "name": "olive oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Chicken Parmesan is a classic Italian dish made with breaded chicken breasts, tomato sauce, parmesan cheese, and mozzarella cheese. The chicken is baked until golden and crispy, then topped with melted cheese and served with pasta."
+  }
+]

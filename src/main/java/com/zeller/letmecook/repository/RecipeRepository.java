@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface RecipeRepository extends MongoRepository<Recipe, String> {
-
 	Recipe deleteRecipeById(String id);
 }

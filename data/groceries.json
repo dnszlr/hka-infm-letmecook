@@ -1,0 +1,34 @@
+[
+  {
+    "name": "spaghetti",
+    "amount": 700,
+    "unit": "grams",
+    "price": 2.29,
+    "purchase": "2023-05-15",
+    "expiration": "2023-05-30"
+  },
+  {
+    "name": "onion",
+    "amount": 10.0,
+    "unit": "pieces",
+    "price": 0.99,
+    "purchase": "2023-05-14",
+    "expiration": "2023-05-25"
+  },
+  {
+    "name": "salt",
+    "amount": 0.45,
+    "unit": "grams",
+    "price": 0.99,
+    "purchase": "2023-05-13",
+    "expiration": "2024-05-22"
+  },
+  {
+    "name": "olive oil",
+    "amount": 0.75,
+    "unit": "liter",
+    "price": 4.99,
+    "purchase": "2023-05-12",
+    "expiration": "2024-01-01"
+  }
+]

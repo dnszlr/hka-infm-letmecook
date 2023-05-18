@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 services:
   #mongodb database
   mongodb:
@@ -15,11 +15,11 @@ services:
   mongo-express:
     image: mongo-express:latest
     container_name: mongo-express
-    restart: on-failure
     ports:
       - "8081:8081"
     volumes:
       - mongoexpress:/data/db
+    restart: always
     depends_on:
       - mongodb
     environment:
@@ -28,6 +28,16 @@ services:
       - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
       - ME_CONFIG_MONGODB_SERVER=mongodb
       - ME_CONFIG_MONGODB_PORT=27017
+  #prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart:  on-failure
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus:/prometheus
   #application
   letmecook:
     build: .
@@ -39,5 +49,6 @@ services:
       - mongodb
 
 volumes:
-  mongodb: { }
-  mongoexpress: { }
+  mongodb:
+  mongoexpress:
+  prometheus:
