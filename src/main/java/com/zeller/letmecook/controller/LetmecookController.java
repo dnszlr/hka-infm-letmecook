@@ -4,6 +4,8 @@ import com.zeller.letmecook.model.*;
 import com.zeller.letmecook.service.LetmecookService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
+import io.micrometer.core.instrument.Timer;
+import io.micrometer.core.ipc.http.HttpSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -26,14 +28,15 @@ public class LetmecookController {
 	private final LetmecookService letmecookService;
 
 	private final Counter apiCounter;
-	private AtomicLong msTimeGauge;
+	private final Timer randomRecipeTimer;
+	private final AtomicLong msTimeGauge;
 
 	public LetmecookController(LetmecookService letmecookService) {
 		this.logger = LoggerFactory.getLogger(LetmecookController.class);
 		this.letmecookService = letmecookService;
 		this.apiCounter = Metrics.counter("counter.api");
-		msTimeGauge = new AtomicLong(0);
-		Metrics.more().timeGauge("gauge.time.post.groceries", Collections.emptyList(), msTimeGauge, TimeUnit.MILLISECONDS, AtomicLong::get);
+		this.randomRecipeTimer = Metrics.timer("timer.random.recipe");
+		Metrics.more().timeGauge("gauge.time.post.groceries", Collections.emptyList(), this.msTimeGauge = new AtomicLong(0), TimeUnit.MILLISECONDS, AtomicLong::get);
 	}
 
 	/**
@@ -91,19 +94,26 @@ public class LetmecookController {
 	@GetMapping("/fridges/{id}/random")
 	public ResponseEntity<RecipeResponse> getRandomRecipe(@PathVariable String id) {
 		apiCounter.increment();
+		Instant start = Instant.now();
 		logger.info("LetmecookController#getRandomRecipe#call");
-		return letmecookService.determineRandomRecipe(id)
+		ResponseEntity<RecipeResponse> response = letmecookService.determineRandomRecipe(id)
 				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+		Instant finish = Instant.now();
+		randomRecipeTimer.record(Duration.between(start, finish));
+		return response;
 	}
 
 	@GetMapping("/fridges/{id}/best")
 	public ResponseEntity<RecipeResponse> getBestRecipe(@PathVariable String id) {
 		apiCounter.increment();
+		Timer.Sample sample = Timer.start(Metrics.globalRegistry);
 		logger.info("LetmecookController#getBestRecipe#call#" + id);
-		return letmecookService.determineBestRecipe(id)
+		ResponseEntity<RecipeResponse> response = letmecookService.determineBestRecipe(id)
 				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+		sample.stop(Metrics.timer("timer.sample.best.recipe", "response", response.getStatusCode().toString()));
+		return response;
 	}
 
 	/**
@@ -148,13 +158,13 @@ public class LetmecookController {
 	public ResponseEntity<Fridge> postGroceries(@PathVariable String id, @RequestBody List<Grocery> groceries) {
 		apiCounter.increment();
 		Instant start = Instant.now();
-		ResponseEntity<Fridge> result = letmecookService.addGroceriesToFridge(id, groceries)
+		logger.info("LetmecookController#postGroceries#call#" + id + "#" + groceries);
+		ResponseEntity<Fridge> response = letmecookService.addGroceriesToFridge(id, groceries)
 				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
 		Instant finish = Instant.now();
 		msTimeGauge.set(Duration.between(start, finish).toMillis());
-		logger.info("LetmecookController#postGroceries#call#" + id + "#" + groceries);
-		return result;
+		return response;
 	}
 
 	@DeleteMapping("/fridges/{id}/groceries/{name}")

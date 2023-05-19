@@ -20,7 +20,7 @@ public class LetmecookService {
 	private final FridgeRepository fridgeRepository;
 	private final RecipeRepository recipeRepository;
 	private final SessionWasteAmountTracker sessionWasteAmountTracker;
-	private AtomicInteger gaugeValue;
+	private final AtomicInteger gaugeValue;
 
 	public LetmecookService(FridgeRepository fridgeRepository, RecipeRepository recipeRepository) {
 		this.logger = LoggerFactory.getLogger(LetmecookService.class);
