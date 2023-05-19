@@ -1,9 +1,6 @@
 package com.zeller.letmecook.controller;
 
-import com.zeller.letmecook.model.RecipeResponse;
-import com.zeller.letmecook.model.Fridge;
-import com.zeller.letmecook.model.Grocery;
-import com.zeller.letmecook.model.Recipe;
+import com.zeller.letmecook.model.*;
 import com.zeller.letmecook.service.LetmecookService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
@@ -27,7 +24,7 @@ public class LetmecookController {
 	public LetmecookController(LetmecookService letmecookService) {
 		this.logger = LoggerFactory.getLogger(LetmecookController.class);
 		this.letmecookService = letmecookService;
-		this.apiCounter = Metrics.counter("letmecook.api.counter");
+		this.apiCounter = Metrics.counter("counter.api");
 	}
 
 	/**

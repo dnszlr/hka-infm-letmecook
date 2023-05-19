@@ -4,6 +4,7 @@ import com.zeller.letmecook.basic.RandomGenerator;
 import com.zeller.letmecook.model.*;
 import com.zeller.letmecook.repository.FridgeRepository;
 import com.zeller.letmecook.repository.RecipeRepository;
+import io.micrometer.core.instrument.Metrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.util.Pair;
@@ -17,11 +18,14 @@ public class LetmecookService {
 	private final Logger logger;
 	private final FridgeRepository fridgeRepository;
 	private final RecipeRepository recipeRepository;
+	private final SessionWasteAmountTracker sessionWasteAmountTracker;
 
 	public LetmecookService(FridgeRepository fridgeRepository, RecipeRepository recipeRepository) {
 		this.logger = LoggerFactory.getLogger(LetmecookService.class);
 		this.fridgeRepository = fridgeRepository;
 		this.recipeRepository = recipeRepository;
+		this.sessionWasteAmountTracker = new SessionWasteAmountTracker();
+		Metrics.more().counter("counter.function.session.waste.amount", Collections.emptyList(), sessionWasteAmountTracker, SessionWasteAmountTracker::getSessionWasteAmount);
 	}
 
 	/**
@@ -204,9 +208,11 @@ public class LetmecookService {
 							.findFirst().orElse(null);
 					logger.info("LetmecookService#removeGroceryFromFridge#groceryToBeRemoved: " + groceryToBeRemoved);
 					if (groceryToBeRemoved != null) {
-						fridge.setWasteAmount(fridge.getWasteAmount() + groceryToBeRemoved.getPrice());
+						float wasteAmount = fridge.getWasteAmount() + groceryToBeRemoved.getPrice();
+						fridge.setWasteAmount(wasteAmount);
 						fridge.getGroceries().remove(groceryToBeRemoved);
-						logger.info("LetmecookService#removeGroceryFromFridge#fridge: " + fridge);
+						sessionWasteAmountTracker.addSessionWasteAmount(wasteAmount);
+						logger.info("LetmecookService#removeGroceryFromFridge#fridge#wasteAmount: " + fridge.getWasteAmount());
 						fridge = fridgeRepository.save(fridge);
 					}
 					return fridge;
