@@ -10,7 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @RequestMapping()
@@ -20,11 +26,14 @@ public class LetmecookController {
 	private final LetmecookService letmecookService;
 
 	private final Counter apiCounter;
+	private AtomicLong msTimeGauge;
 
 	public LetmecookController(LetmecookService letmecookService) {
 		this.logger = LoggerFactory.getLogger(LetmecookController.class);
 		this.letmecookService = letmecookService;
 		this.apiCounter = Metrics.counter("counter.api");
+		msTimeGauge = new AtomicLong(0);
+		Metrics.more().timeGauge("gauge.time.post.groceries", Collections.emptyList(), msTimeGauge, TimeUnit.MILLISECONDS, AtomicLong::get);
 	}
 
 	/**
@@ -138,10 +147,14 @@ public class LetmecookController {
 	@PostMapping("/fridges/{id}/groceries")
 	public ResponseEntity<Fridge> postGroceries(@PathVariable String id, @RequestBody List<Grocery> groceries) {
 		apiCounter.increment();
-		logger.info("LetmecookController#postGroceries#call#" + id + "#" + groceries);
-		return letmecookService.addGroceriesToFridge(id, groceries)
+		Instant start = Instant.now();
+		ResponseEntity<Fridge> result = letmecookService.addGroceriesToFridge(id, groceries)
 				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+		Instant finish = Instant.now();
+		msTimeGauge.set(Duration.between(start, finish).toMillis());
+		logger.info("LetmecookController#postGroceries#call#" + id + "#" + groceries);
+		return result;
 	}
 
 	@DeleteMapping("/fridges/{id}/groceries/{name}")
