@@ -37,7 +37,7 @@ public class LetmecookController {
 	public List<Recipe> getRecipes() {
 		apiCounter.increment();
 		logger.info("LetmecookController#getRecipes#call");
-		return letmecookService.getAllRecipes();
+		return letmecookService.getRecipes();
 	}
 
 	@PostMapping("/recipes")

@@ -11,6 +11,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class LetmecookService {
@@ -19,13 +20,15 @@ public class LetmecookService {
 	private final FridgeRepository fridgeRepository;
 	private final RecipeRepository recipeRepository;
 	private final SessionWasteAmountTracker sessionWasteAmountTracker;
+	private AtomicInteger gaugeValue;
 
 	public LetmecookService(FridgeRepository fridgeRepository, RecipeRepository recipeRepository) {
 		this.logger = LoggerFactory.getLogger(LetmecookService.class);
 		this.fridgeRepository = fridgeRepository;
 		this.recipeRepository = recipeRepository;
 		this.sessionWasteAmountTracker = new SessionWasteAmountTracker();
-		Metrics.more().counter("counter.function.session.waste.amount", Collections.emptyList(), sessionWasteAmountTracker, SessionWasteAmountTracker::getSessionWasteAmount);
+		Metrics.more().counter("counter.session.waste.amount", Collections.emptyList(), sessionWasteAmountTracker, SessionWasteAmountTracker::getSessionWasteAmount);
+		this.gaugeValue = Metrics.gauge("gauge.random.recipe.available.ingredients", new AtomicInteger(0));
 	}
 
 	/**
@@ -34,7 +37,7 @@ public class LetmecookService {
 	 * ######################
 	 */
 
-	public List<Recipe> getAllRecipes() {
+	public List<Recipe> getRecipes() {
 		return recipeRepository.findAll();
 	}
 
@@ -44,7 +47,7 @@ public class LetmecookService {
 
 	public List<Recipe> removeRecipe(String id) {
 		recipeRepository.deleteRecipeById(id);
-		return getAllRecipes();
+		return getRecipes();
 	}
 
 	public List<Recipe> createRecipes(List<Recipe> recipes) {
@@ -73,7 +76,7 @@ public class LetmecookService {
 				.map(fridge -> {
 					List<String> groceryNames = getGroceryNames(fridge.getGroceries());
 					List<Recipe> randomRecipes = new ArrayList<>();
-					for(Recipe recipe : getAllRecipes()) {
+					for(Recipe recipe : getRecipes()) {
 						// checks if at least one ingredient of the recipe matches one of the groceries
 						// stream is used here to make use of anyMatch, the stream stops if a matching ingredient is found
 						if(recipe.getIngredients().stream().anyMatch(ingredient -> containsIngredientInGroceryList(groceryNames, ingredient))) {
@@ -84,8 +87,10 @@ public class LetmecookService {
 					// This seems redundant, but it makes more sense to determine the missingIngredients
 					// and matchingIngredients only once for the random recipe.
 					Pair<List<Ingredient>, List<Ingredient>> sortedIngredients = sortIngredients(groceryNames, recipe.getIngredients());
+					List<Ingredient> availableIngredients = sortedIngredients.getFirst();
+					gaugeValue.set(availableIngredients.size());
 					// determine a random recipe from all randomRecipes
-					return new RecipeResponse(recipe, sortedIngredients.getFirst(), sortedIngredients.getSecond());
+					return new RecipeResponse(recipe, availableIngredients, sortedIngredients.getSecond());
 				});
 	}
 
@@ -104,7 +109,7 @@ public class LetmecookService {
 					List<String> groceryNames = getGroceryNames(fridge.getGroceries());
 					List<RecipeResponse> bestRecipes = new ArrayList<>();
 					long maxCounter = 0;
-					for(Recipe recipe : getAllRecipes()) {
+					for(Recipe recipe : getRecipes()) {
 						Pair<List<Ingredient>, List<Ingredient>> sortedIngredients = sortIngredients(groceryNames, recipe.getIngredients());
 						List<Ingredient> availableIngredients = sortedIngredients.getFirst();
 						List<Ingredient> missingIngredients = sortedIngredients.getSecond();
