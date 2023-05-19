@@ -5,11 +5,10 @@ import com.zeller.letmecook.model.*;
 import com.zeller.letmecook.repository.FridgeRepository;
 import com.zeller.letmecook.repository.RecipeRepository;
 import io.micrometer.core.instrument.Metrics;
+import io.micrometer.core.instrument.MultiGauge;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,15 +19,25 @@ public class LetmecookService {
 	private final FridgeRepository fridgeRepository;
 	private final RecipeRepository recipeRepository;
 	private final SessionWasteAmountTracker sessionWasteAmountTracker;
-	private final AtomicInteger gaugeValue;
+	private AtomicInteger gaugeValue;
+
+	private MultiGauge multiGauge;
 
 	public LetmecookService(FridgeRepository fridgeRepository, RecipeRepository recipeRepository) {
 		this.logger = LoggerFactory.getLogger(LetmecookService.class);
 		this.fridgeRepository = fridgeRepository;
 		this.recipeRepository = recipeRepository;
 		this.sessionWasteAmountTracker = new SessionWasteAmountTracker();
+		this.micrometerConfiguration();
+	}
+
+	public void micrometerConfiguration() {
 		Metrics.more().counter("counter.session.waste.amount", Collections.emptyList(), sessionWasteAmountTracker, SessionWasteAmountTracker::getSessionWasteAmount);
 		this.gaugeValue = Metrics.gauge("gauge.random.recipe.available.ingredients", new AtomicInteger(0));
+		this.multiGauge = MultiGauge.builder("gauge.multi.best.recipes")
+				.description("the number of available Ingredients from the recipes that qualify for the best recipe")
+				.baseUnit("available Ingredients")
+				.register(Metrics.globalRegistry);
 	}
 
 	/**
@@ -69,7 +78,8 @@ public class LetmecookService {
 	 * Accepts any fridge id and determines a random recipe for the ingredients it contains.
 	 * It is not said how many of the ingredients are used in the recipe.
 	 * @param id the ID of the fridge to check for available ingredients
-	 * @return A random recipe
+	 * @return an optional containing a randomly selected random recipe, or an empty optional
+	 * 	 *         if the fridge with the given ID cannot be found
 	 */
 	public Optional<RecipeResponse> determineRandomRecipe(String id) {
 		return fridgeRepository.findFridgeById(id)
@@ -86,11 +96,12 @@ public class LetmecookService {
 					Recipe recipe = randomRecipes.get(RandomGenerator.generateBetweenZeroAnd(randomRecipes.size()));
 					// This seems redundant, but it makes more sense to determine the missingIngredients
 					// and matchingIngredients only once for the random recipe.
-					Pair<List<Ingredient>, List<Ingredient>> sortedIngredients = sortIngredients(groceryNames, recipe.getIngredients());
-					List<Ingredient> availableIngredients = sortedIngredients.getFirst();
+					RecipeResponse response = createRecipeResponse(recipe, groceryNames);
+					List<Ingredient> availableIngredients = response.getAvailableIngredients();
 					gaugeValue.set(availableIngredients.size());
 					// determine a random recipe from all randomRecipes
-					return new RecipeResponse(recipe, availableIngredients, sortedIngredients.getSecond());
+					// TODO Nullcheck
+					return response;
 				});
 	}
 
@@ -107,45 +118,48 @@ public class LetmecookService {
 		return fridgeRepository.findFridgeById(id)
 				.map(fridge -> {
 					List<String> groceryNames = getGroceryNames(fridge.getGroceries());
-					List<RecipeResponse> bestRecipes = new ArrayList<>();
-					long maxCounter = 0;
+					HashMap<Integer, List<RecipeResponse>> sortedRecipes = new HashMap<>();
+					int maxKey = 0;
 					for(Recipe recipe : getRecipes()) {
-						Pair<List<Ingredient>, List<Ingredient>> sortedIngredients = sortIngredients(groceryNames, recipe.getIngredients());
-						List<Ingredient> availableIngredients = sortedIngredients.getFirst();
-						List<Ingredient> missingIngredients = sortedIngredients.getSecond();
-						int counter = availableIngredients.size();
-						if(counter == maxCounter) {
-							// if the counter is equal, the recipe is added to the stored data
-							bestRecipes.add(new RecipeResponse(recipe, availableIngredients, missingIngredients));
-						} else if(counter > maxCounter) {
-							// if the counter is greater than the current maxCounter, the stored data is reset
-							maxCounter = counter;
-							bestRecipes.clear();
-							bestRecipes.add(new RecipeResponse(recipe, availableIngredients, missingIngredients));
-						}
+						RecipeResponse recipeResponse = createRecipeResponse(recipe, groceryNames);
+						int currentKey = recipeResponse.getAvailableIngredients().size();
+						maxKey = Math.max(currentKey, maxKey);
+						// If the key exists in the hashmap the RecipeResponse is added immediately, if not
+						// a new ArrayList is created and the value is added afterward
+						sortedRecipes
+								.computeIfAbsent(currentKey, key -> new ArrayList<>())
+								.add(recipeResponse);
 					}
+					appendMultiMeterEntry(sortedRecipes);
 					// determine a best recipe from all best recipes
+					List<RecipeResponse> bestRecipes = sortedRecipes.get(maxKey);
+					// TODO Nullcheck
 					return bestRecipes.get(RandomGenerator.generateBetweenZeroAnd(bestRecipes.size()));
 				});
 	}
 
+	public void appendMultiMeterEntry(HashMap<Integer, List<RecipeResponse>> sortedRecipes) {
+		// TODO implement
+	}
+
 	/**
-	 * Sorts the list of ingredients into matching and missing ingredients based on a list of grocery names.
-	 * @param groceryNames the list of grocery names
-	 * @param ingredients the list of ingredients
-	 * @return A pair of lists containing the matching and missing ingredients
+	 * Creates a RecipeResponse object based on the given Recipe and list of grocery names.
+	 *
+	 * @param recipe       The Recipe object for which to create the RecipeResponse.
+	 * @param groceryNames The list of grocery names to check against the Recipe's ingredients.
+	 * @return The created RecipeResponse object.
 	 */
-	private Pair<List<Ingredient>, List<Ingredient>> sortIngredients(List<String> groceryNames, List<Ingredient> ingredients) {
+	private RecipeResponse createRecipeResponse(Recipe recipe, List<String> groceryNames) {
 		List<Ingredient> missingIngredients = new ArrayList<>();
 		List<Ingredient> matchingIngredients = new ArrayList<>();
-		for(Ingredient ingredient : ingredients) {
+		for(Ingredient ingredient : recipe.getIngredients()) {
 			if(containsIngredientInGroceryList(groceryNames, ingredient)) {
 				matchingIngredients.add(ingredient);
 			} else {
 				missingIngredients.add(ingredient);
 			}
 		}
-		return Pair.of(matchingIngredients, missingIngredients);
+		return new RecipeResponse(recipe, matchingIngredients, missingIngredients);
 	}
 
 	/**
@@ -178,6 +192,7 @@ public class LetmecookService {
 
 		return Optional.of(fridgeRepository.save(new Fridge(Collections.emptyList(), 0f)));
 	}
+
 	public Optional<Fridge> getFridge(String id) {
 
 		return fridgeRepository.findFridgeById(id);
@@ -197,6 +212,7 @@ public class LetmecookService {
 				.filter(fridge -> fridge.getGroceries().addAll(groceries))
 				.map(fridgeRepository::save);
 	}
+
 	/**
 	 * Removes the grocery with the given name from the fridge with the given id.
 	 * The method also increases the wasteAmount of the fridge by the price of the removed grocery.

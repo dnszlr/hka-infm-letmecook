@@ -5,12 +5,12 @@ import java.util.List;
 public class RecipeResponse {
 
 	private final Recipe recipe;
-	private List<Ingredient> availableIngredient;
+	private List<Ingredient> availableIngredients;
 	private List<Ingredient> shoppingList;
 
-	public RecipeResponse(Recipe recipe, List<Ingredient> availableIngredient, List<Ingredient> shoppingList) {
+	public RecipeResponse(Recipe recipe, List<Ingredient> availableIngredients, List<Ingredient> shoppingList) {
 		this.recipe = recipe;
-		this.availableIngredient = availableIngredient;
+		this.availableIngredients = availableIngredients;
 		this.shoppingList = shoppingList;
 	}
 
@@ -18,12 +18,12 @@ public class RecipeResponse {
 		return recipe;
 	}
 
-	public List<Ingredient> getAvailableIngredient() {
-		return availableIngredient;
+	public List<Ingredient> getAvailableIngredients() {
+		return availableIngredients;
 	}
 
-	public void setAvailableIngredient(List<Ingredient> availableIngredient) {
-		this.availableIngredient = availableIngredient;
+	public void setAvailableIngredients(List<Ingredient> availableIngredients) {
+		this.availableIngredients = availableIngredients;
 	}
 
 	public List<Ingredient> getShoppingList() {
