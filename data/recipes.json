@@ -44,7 +44,7 @@
         "unit": "pieces"
       },
       {
-        "name": "bell peppers",
+        "name": "bell pepper",
         "amount": 2,
         "unit": "pieces"
       },
@@ -631,7 +631,7 @@
         "unit": "pieces"
       },
       {
-        "name": "bell peppers",
+        "name": "bell pepper",
         "amount": 2,
         "unit": "pieces"
       },
@@ -683,5 +683,129 @@
       }
     ],
     "description": "Chicken Parmesan is a classic Italian dish made with breaded chicken breasts, tomato sauce, parmesan cheese, and mozzarella cheese. The chicken is baked until golden and crispy, then topped with melted cheese and served with pasta."
+  },
+  {
+    "name": "Teriyaki Chicken",
+    "ingredients": [
+      { "name": "chicken thighs", "amount": 4, "unit": "pieces" },
+      { "name": "soy sauce", "amount": 0.5, "unit": "cup" },
+      { "name": "honey", "amount": 0.25, "unit": "cup" },
+      { "name": "garlic", "amount": 2, "unit": "cloves" }
+    ],
+    "description": "Teriyaki Chicken is a popular Japanese dish made with tender chicken thighs marinated in a flavorful sauce made with soy sauce, honey, and garlic. The chicken is then grilled or pan-fried until cooked through and glazed with the sticky teriyaki sauce."
+  },
+  {
+    "name": "Thai Green Curry",
+    "ingredients": [
+      { "name": "chicken breast", "amount": 300, "unit": "grams" },
+      { "name": "green curry paste", "amount": 2, "unit": "tablespoons" },
+      { "name": "coconut milk", "amount": 1, "unit": "can" },
+      { "name": "bamboo shoots", "amount": 0.5, "unit": "cup" },
+      { "name": "bell pepper", "amount": 1, "unit": "piece" },
+      { "name": "basil leaves", "amount": 0.25, "unit": "cup" }
+    ],
+    "description": "Thai Green Curry is a spicy and aromatic dish made with chicken, green curry paste, coconut milk, bamboo shoots, bell pepper, and basil leaves. The curry is simmered until the flavors meld together and served with steamed rice."
+  },
+  {
+    "name": "Gazpacho",
+    "ingredients": [
+      { "name": "tomatoes", "amount": 6, "unit": "pieces" },
+      { "name": "cucumber", "amount": 1, "unit": "piece" },
+      { "name": "red bell pepper", "amount": 1, "unit": "piece" },
+      { "name": "garlic cloves", "amount": 2, "unit": "pieces" },
+      { "name": "olive oil", "amount": 3, "unit": "tablespoons" },
+      { "name": "sherry vinegar", "amount": 2, "unit": "tablespoons" }
+    ],
+    "description": "Gazpacho is a refreshing Spanish cold soup made with ripe tomatoes, cucumber, red bell pepper, garlic cloves, olive oil, and sherry vinegar. The ingredients are blended together until smooth and chilled before serving. It's a perfect dish for hot summer days and a popular choice in Spanish cuisine."
+  },
+  {
+    "name": "Coq au Vin",
+    "ingredients": [
+      { "name": "chicken pieces", "amount": 8, "unit": "pieces" },
+      { "name": "red wine", "amount": 750, "unit": "ml" },
+      { "name": "bacon", "amount": 200, "unit": "grams" },
+      { "name": "onions", "amount": 2, "unit": "pieces" },
+      { "name": "carrots", "amount": 4, "unit": "pieces" },
+      { "name": "mushrooms", "amount": 250, "unit": "grams" },
+      { "name": "garlic", "amount": 3, "unit": "cloves" }
+    ],
+    "description": "Coq au Vin is a classic French dish made with chicken pieces cooked in red wine along with bacon, onions, carrots, mushrooms, and garlic. The dish is braised slowly to develop rich flavors, resulting in tender chicken and a delicious sauce."
+  },
+  {
+    "name": "Ratatouille",
+    "ingredients": [
+      { "name": "eggplant", "amount": 1, "unit": "piece" },
+      { "name": "zucchini", "amount": 2, "unit": "pieces" },
+      { "name": "red bell pepper", "amount": 1, "unit": "piece" },
+      { "name": "yellow bell pepper", "amount": 1, "unit": "piece" },
+      { "name": "onion", "amount": 1, "unit": "piece" },
+      { "name": "garlic", "amount": 3, "unit": "cloves" },
+      { "name": "tomatoes", "amount": 4, "unit": "pieces" },
+      { "name": "olive oil", "amount": 2, "unit": "tablespoons" },
+      { "name": "thyme", "amount": 1, "unit": "teaspoon" },
+      { "name": "basil", "amount": 0.25, "unit": "cup" }
+    ],
+    "description": "Ratatouille is a traditional French vegetable dish made with eggplant, zucchini, bell peppers, onion, garlic, tomatoes, olive oil, thyme, and basil. The vegetables are sautéed until tender and then simmered together to create a flavorful and colorful dish."
+  },
+  {
+    "name": "Croque Monsieur",
+    "ingredients": [
+      { "name": "bread slices", "amount": 8, "unit": "slices" },
+      { "name": "ham", "amount": 200, "unit": "grams" },
+      { "name": "cheese", "amount": 200, "unit": "grams" },
+      { "name": "butter", "amount": 2, "unit": "tablespoons" },
+      { "name": "bechamel sauce", "amount": 1, "unit": "cup" }
+    ],
+    "description": "Croque Monsieur is a classic French grilled sandwich made with ham, cheese (Gruyère or Emmental), and bechamel sauce. The sandwich is assembled with layers of ham and cheese, topped with bechamel sauce, and then toasted until the cheese is melted and bubbly."
+  },
+  {
+    "name": "Sauerbraten",
+    "ingredients": [
+      { "name": "beef roast", "amount": 1, "unit": "kg" },
+      { "name": "red wine vinegar", "amount": 200, "unit": "ml" },
+      { "name": "onions", "amount": 2, "unit": "pieces" },
+      { "name": "carrots", "amount": 2, "unit": "pieces" },
+      { "name": "celery stalks", "amount": 2, "unit": "pieces" },
+      { "name": "bay leaves", "amount": 2, "unit": "pieces" },
+      { "name": "juniper berries", "amount": 6, "unit": "pieces" },
+      { "name": "cloves", "amount": 6, "unit": "pieces" }
+    ],
+    "description": "Sauerbraten is a traditional German pot roast made with marinated beef, red wine vinegar, onions, carrots, celery stalks, bay leaves, juniper berries, and cloves. The meat is marinated for several days to develop rich flavors, then slow-cooked until tender."
+  },
+  {
+    "name": "Käsespätzle",
+    "ingredients": [
+      { "name": "spätzle", "amount": 500, "unit": "grams" },
+      { "name": "cheese", "amount": 200, "unit": "grams" },
+      { "name": "onion", "amount": 1, "unit": "piece" },
+      { "name": "butter", "amount": 50, "unit": "grams" },
+      { "name": "salt", "amount": 1, "unit": "teaspoon" },
+      { "name": "black pepper", "amount": 0.25, "unit": "teaspoon" }
+    ],
+    "description": "Käsespätzle is a traditional German dish made with homemade spätzle (soft egg noodles), cheese (Emmental or Gruyère), onions, butter, salt, and black pepper. The spätzle and cheese are layered, baked until the cheese is melted and bubbly, and served as a delicious and comforting dish."
+  },
+  {
+    "name": "Currywurst",
+    "ingredients": [
+      { "name": "bratwurst sausages", "amount": 4, "unit": "pieces" },
+      { "name": "ketchup", "amount": 0.5, "unit": "cup" },
+      { "name": "curry powder", "amount": 2, "unit": "teaspoons" },
+      { "name": "paprika powder", "amount": 1, "unit": "teaspoon" },
+      { "name": "onion", "amount": 1, "unit": "piece" },
+      { "name": "oil", "amount": 2, "unit": "tablespoons" }
+    ],
+    "description": "Currywurst is a popular German street food made with bratwurst sausages, ketchup, curry powder, paprika powder, onion, and oil. The sausages are fried, sliced, and smothered in a tangy and spicy curry-ketchup sauce, typically served with fries or bread rolls."
+  },
+  {
+    "name": "Aloo Gobi",
+    "ingredients": [
+      { "name": "potatoes", "amount": 4, "unit": "pieces" },
+      { "name": "cauliflower", "amount": 1, "unit": "medium-sized head" },
+      { "name": "onion", "amount": 1, "unit": "piece" },
+      { "name": "ginger", "amount": 1, "unit": "inch" },
+      { "name": "green chilies", "amount": 2, "unit": "pieces" },
+      { "name": "turmeric powder", "amount": 0.5, "unit": "teaspoon" }
+    ],
+    "description": "Aloo Gobi is a popular Indian vegetarian dish made with potatoes, cauliflower, onion, ginger, green chilies, and turmeric powder. The vegetables are cooked together with aromatic spices, resulting in a flavorful and comforting dish that pairs well with rice or bread."
   }
 ]

@@ -125,6 +125,7 @@ public class LetmecookController {
 	@PostMapping("/fridges")
 	public ResponseEntity<Fridge> postFridge() {
 		apiCounter.increment();
+		logger.info("LetmecookController#postFridge#call");
 		return letmecookService.createFridge()
 				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));

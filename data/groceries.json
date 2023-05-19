@@ -30,5 +30,69 @@
     "price": 4.99,
     "purchase": "2023-05-12",
     "expiration": "2024-01-01"
+  },
+  {
+    "name": "chicken breast",
+    "amount": 1000,
+    "unit": "grams",
+    "price": 6.99,
+    "purchase": "2023-05-19",
+    "expiration": "2023-05-30"
+  },
+  {
+    "name": "lemon",
+    "amount": 5,
+    "unit": "piece",
+    "price": 0.99,
+    "purchase": "2023-05-13",
+    "expiration": "2023-05-22"
+  },
+  {
+    "name": "bell pepper",
+    "amount": 6,
+    "unit": "piece",
+    "price": 1.99,
+    "purchase": "2023-05-11",
+    "expiration": "2023-05-23"
+  },
+  {
+    "name": "mushrooms",
+    "amount": 200,
+    "unit": "grams",
+    "price": 2.99,
+    "purchase": "2023-05-19",
+    "expiration": "2023-05-25"
+  },
+  {
+    "name": "butter",
+    "amount": 250,
+    "unit": "grams",
+    "price": 1.99,
+    "purchase": "2023-05-18",
+    "expiration": "2023-06-01"
+  },
+  {
+    "name": "cheese",
+    "amount": 150,
+    "unit": "grams",
+    "price": 3.49,
+    "purchase": "2023-05-17",
+    "expiration": "2023-05-31"
+  },
+  {
+    "name": "ginger",
+    "amount": 1,
+    "unit": "piece",
+    "price": 0.5,
+    "purchase": "2023-05-16",
+    "expiration": "2023-05-30"
+  },
+  {
+    "name": "garlic",
+    "amount": 4,
+    "unit": "cloves",
+    "price": 0.3,
+    "purchase": "2023-05-15",
+    "expiration": "2023-05-30"
   }
 ]
