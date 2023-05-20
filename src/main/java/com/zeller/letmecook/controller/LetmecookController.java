@@ -32,8 +32,6 @@ public class LetmecookController {
 
 	private DistributionSummary importRecipesDistributionSummary;
 
-	private LongTaskTimer mergeLongTaskTimer;
-
 	public LetmecookController(LetmecookService letmecookService) {
 		this.logger = LoggerFactory.getLogger(LetmecookController.class);
 		this.letmecookService = letmecookService;
@@ -115,6 +113,7 @@ public class LetmecookController {
 	@GetMapping("/fridges/{id}/best")
 	public ResponseEntity<RecipeResponse> getBestRecipe(@PathVariable String id) {
 		apiCounter.increment();
+		// SampleTimer
 		Timer.Sample sample = Timer.start(Metrics.globalRegistry);
 		logger.info("LetmecookController#getBestRecipe#call#" + id);
 		ResponseEntity<RecipeResponse> response = letmecookService.determineBestRecipe(id)
@@ -195,18 +194,33 @@ public class LetmecookController {
 	}
 
 	private void micrometerConfiguration() {
+		// Counter
 		this.apiCounter = Metrics.globalRegistry.counter("custom.counter.api");
-		this.randomRecipeTimer = Metrics.globalRegistry.timer("custom.timer.random.recipe");
+		// Timer
+		this.randomRecipeTimer = Timer.builder("custom.timer.random.recipe")
+				.description("Duration to determine a random recipe")
+				.publishPercentiles(0.3, 0.6, 0.9)
+				.publishPercentileHistogram()
+				.minimumExpectedValue(Duration.ofMillis(1))
+				.maximumExpectedValue(Duration.ofMillis(8000))
+				.register(Metrics.globalRegistry);
+		// TimeGauge
 		Metrics.globalRegistry.more().timeGauge("custom.gauge.time.post.groceries", Collections.emptyList(), this.msTimeGauge = new AtomicLong(0), TimeUnit.MILLISECONDS, AtomicLong::get); // done
+		// FunctionTimer
 		FunctionTimer.builder("custom.timer.function.post.recipe.latency", this.postRecipeAPITracker,
 						PostRecipeAPITracker::getCounter,
 						PostRecipeAPITracker::getTotalLatency,
 						TimeUnit.MILLISECONDS)
 				.description("post recipe api timer")
 				.register(Metrics.globalRegistry);
+		// DistributionSummary
 		this.importRecipesDistributionSummary = DistributionSummary.builder("custom.distribution.summary.import.recipe.request.size")
 				.description("determines the size for the importRecipes endpoint")
+				.publishPercentiles(0.3, 0.5, 0.9)
+				.publishPercentileHistogram()
 				.baseUnit("bytes")
+				.minimumExpectedValue(0.0)
+				.maximumExpectedValue(50000.0)
 				.register(Metrics.globalRegistry);
 	}
 }

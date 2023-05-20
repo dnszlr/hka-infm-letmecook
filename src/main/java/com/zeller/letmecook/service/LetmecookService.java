@@ -268,12 +268,17 @@ public class LetmecookService {
 	}
 
 	private void micrometerConfiguration() {
+		// FunctionCounter
+		Metrics.globalRegistry.more().counter("counter.session.waste.amount", Collections.emptyList(), sessionWasteAmountTracker, SessionWasteAmountTracker::getSessionWasteAmount);
+		// Gauge
 		this.gaugeValue = Metrics.globalRegistry.gauge("custom.gauge.random.recipe.available.ingredients", new AtomicInteger(0));
+		// Multi-Gauge
 		// Caution: At least one request must be made for the metric to appear in Prometheus
 		this.multiGauge = MultiGauge.builder("custom.gauge.multi.best.recipes")
 				.description("the number of available Ingredients from the recipes that qualify for the best recipe")
 				.baseUnit("available ingredients")
 				.register(Metrics.globalRegistry);
+		// LongTaskTimer
 		this.mergeLongTaskTimer = LongTaskTimer.builder("custom.long.task.merge.groceries")
 				.description("measures the time needed to merge duplicated grocieries in the database")
 				.register(Metrics.globalRegistry);
