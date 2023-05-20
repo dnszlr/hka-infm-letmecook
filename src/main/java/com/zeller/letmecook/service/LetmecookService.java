@@ -262,14 +262,14 @@ public class LetmecookService {
 	public Optional<Fridge> findDuplicatedGroceriesAndMerge(String id) {
 		return fridgeRepository.findFridgeById(id)
 				.map(fridge -> {
-					Map<String, Grocery> mergedGroceries = new HashMap<>();
 					mergeLongTaskTimer.record(() -> {
+					Map<String, Grocery> mergedGroceries = new HashMap<>();
 						for(Grocery grocery : fridge.getGroceries()) {
 							logger.info(grocery.toString());
-							// CAUTION, TIMEOUT BLOCK TO SIMULATE LONG TASK
-							try {TimeUnit.MILLISECONDS.sleep(RandomGenerator.generate(500, 2000));}
+							// TODO CAUTION, TIMEOUT BLOCK TO SIMULATE LONG TASK
+							try {TimeUnit.MILLISECONDS.sleep(RandomGenerator.generate(500, 1500));}
 							catch(InterruptedException e) {throw new RuntimeException(e);}
-							// CAUTION, TIMEOUT BLOCK TO SIMULATE LONG TASK
+							// TODO CAUTION, TIMEOUT BLOCK TO SIMULATE LONG TASK
 							if(grocery.equalsForMerge(mergedGroceries.get(grocery.getName()))) {
 								Grocery duplicate = mergedGroceries.get(grocery.getName());
 								duplicate.mergeGrocery(grocery);
@@ -278,9 +278,9 @@ public class LetmecookService {
 								mergedGroceries.put(grocery.getName(), grocery);
 							}
 						}
-					});
 					fridge.setGroceries(mergedGroceries.values().stream().toList());
 					logger.info("fridge: "+ fridge);
+					});
 					return fridgeRepository.save(fridge);
 				});
 	}
