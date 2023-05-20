@@ -16,6 +16,10 @@ public class Grocery extends Ingredient{
 		this.expiration = expiration;
 	}
 
+	public Grocery() {
+		super(null, 0f, null);
+	}
+
 	public float getPrice() {
 		return price;
 	}
@@ -38,6 +42,21 @@ public class Grocery extends Ingredient{
 
 	public void setExpiration(LocalDate expiration) {
 		this.expiration = expiration;
+	}
+
+	public void mergeGrocery(Grocery grocery) {
+		this.price += grocery.getPrice();
+		setAmount(getAmount() + grocery.getAmount());
+	}
+
+	public boolean equalsForMerge(Object o) {
+		if(this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Grocery other = (Grocery) o;
+		return Objects.equals(getName(), other.getName())
+				&& Objects.equals(purchase, other.purchase)
+				&& Objects.equals(expiration, other.expiration)
+				&& Objects.equals(getUnit(), other.getUnit());
 	}
 
 	@Override

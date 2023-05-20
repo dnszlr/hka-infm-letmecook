@@ -5,6 +5,7 @@ import com.zeller.letmecook.model.*;
 import com.zeller.letmecook.repository.FridgeRepository;
 import com.zeller.letmecook.repository.RecipeRepository;
 import com.zeller.letmecook.utility.SessionWasteAmountTracker;
+import io.micrometer.core.instrument.LongTaskTimer;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.MultiGauge;
 import io.micrometer.core.instrument.MultiGauge.Row;
@@ -12,7 +13,11 @@ import io.micrometer.core.instrument.Tags;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+import java.time.temporal.TemporalUnit;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -26,6 +31,7 @@ public class LetmecookService {
 	private AtomicInteger gaugeValue;
 
 	private MultiGauge multiGauge;
+	private LongTaskTimer mergeLongTaskTimer;
 
 	public LetmecookService(FridgeRepository fridgeRepository, RecipeRepository recipeRepository) {
 		this.logger = LoggerFactory.getLogger(LetmecookService.class);
@@ -41,6 +47,9 @@ public class LetmecookService {
 		this.multiGauge = MultiGauge.builder("gauge.multi.best.recipes")
 				.description("the number of available Ingredients from the recipes that qualify for the best recipe")
 				.baseUnit("available ingredients")
+				.register(Metrics.globalRegistry);
+		this.mergeLongTaskTimer = LongTaskTimer.builder("timer.long.task.merge.groceries")
+				.description("measures the time needed to merge duplicated grocieries in the database")
 				.register(Metrics.globalRegistry);
 	}
 
@@ -177,9 +186,12 @@ public class LetmecookService {
 	 * @return true if at least one ingredient is contained in the grocery names list, false otherwise
 	 */
 	public boolean containsIngredientInGroceryList(List<String> groceryNames, Ingredient ingredient) {
-		return groceryNames.stream().anyMatch(groceryName -> groceryName.toLowerCase().contains(ingredient.getName().toLowerCase()));
+		return groceryNames.stream().anyMatch(groceryName -> containsIgnoresCase(groceryName, ingredient));
 	}
 
+	private boolean containsIgnoresCase(String groceryName, Ingredient ingredient) {
+		return groceryName.toLowerCase().contains(ingredient.getName().toLowerCase());
+	}
 	/**
 	 * Casts the grocery list to a list of Strings
 	 * @param groceries The available ingredients
@@ -244,6 +256,32 @@ public class LetmecookService {
 						fridge = fridgeRepository.save(fridge);
 					}
 					return fridge;
+				});
+	}
+
+	public Optional<Fridge> findDuplicatedGroceriesAndMerge(String id) {
+		return fridgeRepository.findFridgeById(id)
+				.map(fridge -> {
+					Map<String, Grocery> mergedGroceries = new HashMap<>();
+					mergeLongTaskTimer.record(() -> {
+						for(Grocery grocery : fridge.getGroceries()) {
+							logger.info(grocery.toString());
+							// CAUTION, TIMEOUT BLOCK TO SIMULATE LONG TASK
+							try {TimeUnit.MILLISECONDS.sleep(RandomGenerator.generate(500, 2000));}
+							catch(InterruptedException e) {throw new RuntimeException(e);}
+							// CAUTION, TIMEOUT BLOCK TO SIMULATE LONG TASK
+							if(grocery.equalsForMerge(mergedGroceries.get(grocery.getName()))) {
+								Grocery duplicate = mergedGroceries.get(grocery.getName());
+								duplicate.mergeGrocery(grocery);
+								mergedGroceries.put(duplicate.getName(), duplicate);
+							} else {
+								mergedGroceries.put(grocery.getName(), grocery);
+							}
+						}
+					});
+					fridge.setGroceries(mergedGroceries.values().stream().toList());
+					logger.info("fridge: "+ fridge);
+					return fridgeRepository.save(fridge);
 				});
 	}
 }

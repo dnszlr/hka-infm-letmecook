@@ -32,6 +32,8 @@ public class LetmecookController {
 
 	private DistributionSummary importRecipesDistributionSummary;
 
+	private LongTaskTimer mergeLongTaskTimer;
+
 	public LetmecookController(LetmecookService letmecookService) {
 		this.logger = LoggerFactory.getLogger(LetmecookController.class);
 		this.letmecookService = letmecookService;
@@ -49,7 +51,7 @@ public class LetmecookController {
 						TimeUnit.MILLISECONDS)
 				.description("post recipe api timer")
 				.register(Metrics.globalRegistry);
-		this.importRecipesDistributionSummary = DistributionSummary.builder("distributionsummary.import.recipe.request.size")
+		this.importRecipesDistributionSummary = DistributionSummary.builder("distribution.summary.import.recipe.request.size")
 				.description("determines the size for the importRecipes endpoint")
 				.baseUnit("bytes")
 				.register(Metrics.globalRegistry);
@@ -196,5 +198,15 @@ public class LetmecookController {
 		return letmecookService.removeGroceryFromFridge(id, name)
 				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@GetMapping("/fridges/{id}/groceries/merge")
+	public ResponseEntity<Fridge> mergeDuplicateGroceries(@PathVariable String id) {
+		apiCounter.increment();
+		logger.info("LetmecookController#mergeDuplicateGroceries#call#" + id);
+		ResponseEntity<Fridge> response = letmecookService.findDuplicatedGroceriesAndMerge(id)
+				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+		return response;
 	}
 }
