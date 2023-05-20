@@ -41,22 +41,6 @@ public class LetmecookController {
 		this.micrometerConfiguration();
 	}
 
-	public void micrometerConfiguration() {
-		this.apiCounter = Metrics.counter("counter.api");
-		this.randomRecipeTimer = Metrics.timer("timer.random.recipe");
-		Metrics.more().timeGauge("gauge.time.post.groceries", Collections.emptyList(), this.msTimeGauge = new AtomicLong(0), TimeUnit.MILLISECONDS, AtomicLong::get);
-		FunctionTimer.builder("timer.function.post.recipe.latency", this.postRecipeAPITracker,
-						PostRecipeAPITracker::getCounter,
-						PostRecipeAPITracker::getTotalLatency,
-						TimeUnit.MILLISECONDS)
-				.description("post recipe api timer")
-				.register(Metrics.globalRegistry);
-		this.importRecipesDistributionSummary = DistributionSummary.builder("distribution.summary.import.recipe.request.size")
-				.description("determines the size for the importRecipes endpoint")
-				.baseUnit("bytes")
-				.register(Metrics.globalRegistry);
-	}
-
 	/**
 	 * ######################
 	 * #### Recipe APIs #####
@@ -208,5 +192,21 @@ public class LetmecookController {
 				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 		return response;
+	}
+
+	private void micrometerConfiguration() {
+		this.apiCounter = Metrics.globalRegistry.counter("custom.counter.api");
+		this.randomRecipeTimer = Metrics.globalRegistry.timer("custom.timer.random.recipe");
+		Metrics.globalRegistry.more().timeGauge("custom.gauge.time.post.groceries", Collections.emptyList(), this.msTimeGauge = new AtomicLong(0), TimeUnit.MILLISECONDS, AtomicLong::get); // done
+		FunctionTimer.builder("custom.timer.function.post.recipe.latency", this.postRecipeAPITracker,
+						PostRecipeAPITracker::getCounter,
+						PostRecipeAPITracker::getTotalLatency,
+						TimeUnit.MILLISECONDS)
+				.description("post recipe api timer")
+				.register(Metrics.globalRegistry);
+		this.importRecipesDistributionSummary = DistributionSummary.builder("custom.distribution.summary.import.recipe.request.size")
+				.description("determines the size for the importRecipes endpoint")
+				.baseUnit("bytes")
+				.register(Metrics.globalRegistry);
 	}
 }

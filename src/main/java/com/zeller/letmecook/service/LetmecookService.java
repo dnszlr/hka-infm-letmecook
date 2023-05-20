@@ -5,17 +5,11 @@ import com.zeller.letmecook.model.*;
 import com.zeller.letmecook.repository.FridgeRepository;
 import com.zeller.letmecook.repository.RecipeRepository;
 import com.zeller.letmecook.utility.SessionWasteAmountTracker;
-import io.micrometer.core.instrument.LongTaskTimer;
-import io.micrometer.core.instrument.Metrics;
-import io.micrometer.core.instrument.MultiGauge;
+import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.MultiGauge.Row;
-import io.micrometer.core.instrument.Tags;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import java.time.Duration;
-import java.time.temporal.TemporalUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -39,18 +33,6 @@ public class LetmecookService {
 		this.recipeRepository = recipeRepository;
 		this.sessionWasteAmountTracker = new SessionWasteAmountTracker();
 		this.micrometerConfiguration();
-	}
-
-	public void micrometerConfiguration() {
-		Metrics.more().counter("counter.session.waste.amount", Collections.emptyList(), sessionWasteAmountTracker, SessionWasteAmountTracker::getSessionWasteAmount);
-		this.gaugeValue = Metrics.gauge("gauge.random.recipe.available.ingredients", new AtomicInteger(0));
-		this.multiGauge = MultiGauge.builder("gauge.multi.best.recipes")
-				.description("the number of available Ingredients from the recipes that qualify for the best recipe")
-				.baseUnit("available ingredients")
-				.register(Metrics.globalRegistry);
-		this.mergeLongTaskTimer = LongTaskTimer.builder("timer.long.task.merge.groceries")
-				.description("measures the time needed to merge duplicated grocieries in the database")
-				.register(Metrics.globalRegistry);
 	}
 
 	/**
@@ -283,5 +265,17 @@ public class LetmecookService {
 					});
 					return fridgeRepository.save(fridge);
 				});
+	}
+
+	private void micrometerConfiguration() {
+		this.gaugeValue = Metrics.globalRegistry.gauge("custom.gauge.random.recipe.available.ingredients", new AtomicInteger(0));
+		// Caution: At least one request must be made for the metric to appear in Prometheus
+		this.multiGauge = MultiGauge.builder("custom.gauge.multi.best.recipes")
+				.description("the number of available Ingredients from the recipes that qualify for the best recipe")
+				.baseUnit("available ingredients")
+				.register(Metrics.globalRegistry);
+		this.mergeLongTaskTimer = LongTaskTimer.builder("custom.long.task.merge.groceries")
+				.description("measures the time needed to merge duplicated grocieries in the database")
+				.register(Metrics.globalRegistry);
 	}
 }
