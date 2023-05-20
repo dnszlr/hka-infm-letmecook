@@ -14,6 +14,7 @@ public class MicrometerConfiguration {
 			@Override
 			public Meter.Id map(Meter.Id id) {
 				if(id.getName().startsWith("custom")) {
+					// append a letmecook tag to all custom meters
 					return id.withName("letmecook." + id.getName());
 				}
 				return id;

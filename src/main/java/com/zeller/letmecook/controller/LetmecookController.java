@@ -75,8 +75,8 @@ public class LetmecookController {
 
 	@PostMapping("/recipes/import")
 	public List<Recipe> importRecipes(HttpServletRequest request, @RequestBody List<Recipe> recipes) {
-		importRecipesDistributionSummary.record(request.getContentLengthLong());
 		apiCounter.increment();
+		importRecipesDistributionSummary.record(request.getContentLengthLong());
 		logger.info("LetmecookController#importRecipes#call#" + recipes);
 		return letmecookService.createRecipes(recipes);
 	}
@@ -187,10 +187,9 @@ public class LetmecookController {
 	public ResponseEntity<Fridge> mergeDuplicateGroceries(@PathVariable String id) {
 		apiCounter.increment();
 		logger.info("LetmecookController#mergeDuplicateGroceries#call#" + id);
-		ResponseEntity<Fridge> response = letmecookService.findDuplicatedGroceriesAndMerge(id)
+		return letmecookService.findDuplicatedGroceriesAndMerge(id)
 				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-		return response;
 	}
 
 	private void micrometerConfiguration() {
