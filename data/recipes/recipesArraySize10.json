@@ -1,0 +1,347 @@
+[
+  {
+    "name": "Spaghetti Bolognese",
+    "ingredients": [
+      {
+        "name": "ground beef",
+        "amount": 500,
+        "unit": "grams"
+      },
+      {
+        "name": "spaghetti",
+        "amount": 300,
+        "unit": "grams"
+      },
+      {
+        "name": "tomato sauce",
+        "amount": 400,
+        "unit": "milliliters"
+      },
+      {
+        "name": "onion",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "garlic cloves",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "olive oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Spaghetti Bolognese is a classic Italian dish made with ground beef, tomato sauce, onions, garlic, and served over spaghetti."
+  },
+  {
+    "name": "Chicken Stir-Fry",
+    "ingredients": [
+      {
+        "name": "chicken breast",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "bell pepper",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "broccoli florets",
+        "amount": 1,
+        "unit": "cups"
+      },
+      {
+        "name": "soy sauce",
+        "amount": 3,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "garlic powder",
+        "amount": 1,
+        "unit": "teaspoons"
+      },
+      {
+        "name": "vegetable oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Chicken Stir-Fry is a quick and flavorful dish made with chicken, bell peppers, broccoli, soy sauce, and garlic powder."
+  },
+  {
+    "name": "Mushroom Risotto",
+    "ingredients": [
+      {
+        "name": "arborio rice",
+        "amount": 1,
+        "unit": "cups"
+      },
+      {
+        "name": "mushrooms",
+        "amount": 200,
+        "unit": "grams"
+      },
+      {
+        "name": "vegetable broth",
+        "amount": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "onion",
+        "amount": 1,
+        "unit": "small"
+      },
+      {
+        "name": "parmesan cheese",
+        "amount": 1,
+        "unit": "cups"
+      },
+      {
+        "name": "butter",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Mushroom Risotto is a creamy Italian rice dish made with Arborio rice, mushrooms, vegetable broth, onions, parmesan cheese, and butter."
+  },
+  {
+    "name": "Beef Stir-Fry",
+    "ingredients": [
+      {
+        "name": "beef sirloin",
+        "amount": 400,
+        "unit": "grams"
+      },
+      {
+        "name": "broccoli florets",
+        "amount": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "carrots",
+        "amount": 2,
+        "unit": "medium"
+      },
+      {
+        "name": "soy sauce",
+        "amount": 3,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "ginger",
+        "amount": 1,
+        "unit": "teaspoons"
+      },
+      {
+        "name": "vegetable oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Beef Stir-Fry is a flavorful dish made with beef sirloin, broccoli, carrots, soy sauce, ginger, and vegetable oil."
+  },
+  {
+    "name": "Pesto Pasta",
+    "ingredients": [
+      {
+        "name": "penne pasta",
+        "amount": 300,
+        "unit": "grams"
+      },
+      {
+        "name": "basil leaves",
+        "amount": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "pine nuts",
+        "amount": 1,
+        "unit": "cups"
+      },
+      {
+        "name": "garlic cloves",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "olive oil",
+        "amount": 0.5,
+        "unit": "cups"
+      },
+      {
+        "name": "parmesan cheese",
+        "amount": 0.5,
+        "unit": "cups"
+      }
+    ],
+    "description": "Pesto Pasta is a delicious Italian dish made with penne pasta, basil leaves, pine nuts, garlic, olive oil, and parmesan cheese."
+  },
+  {
+    "name": "Teriyaki Salmon",
+    "ingredients": [
+      {
+        "name": "salmon fillets",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "teriyaki sauce",
+        "amount": 0.25,
+        "unit": "cups"
+      },
+      {
+        "name": "green onions",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "sesame seeds",
+        "amount": 1,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "vegetable oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "salt",
+        "amount": 0.5,
+        "unit": "teaspoons"
+      }
+    ],
+    "description": "Teriyaki Salmon is a tasty dish made with salmon fillets, teriyaki sauce, green onions, sesame seeds, vegetable oil, and salt."
+  },
+  {
+    "name": "Lemon Herb Roasted Chicken",
+    "ingredients": [
+      {
+        "name": "whole chicken",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "lemon",
+        "amount": 1,
+        "unit": "pieces"
+      },
+      {
+        "name": "fresh thyme",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "garlic cloves",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "olive oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "salt",
+        "amount": 1,
+        "unit": "teaspoons"
+      }
+    ],
+    "description": "Lemon Herb Roasted Chicken is a flavorful dish made with a whole chicken, lemon, fresh thyme, garlic, olive oil, and salt."
+  },
+  {
+    "name": "Beef and Broccoli Stir-Fry",
+    "ingredients": [
+      {
+        "name": "beef sirloin",
+        "amount": 400,
+        "unit": "grams"
+      },
+      {
+        "name": "broccoli florets",
+        "amount": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "soy sauce",
+        "amount": 4,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "garlic",
+        "amount": 3,
+        "unit": "cloves"
+      },
+      {
+        "name": "sesame oil",
+        "amount": 1,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "cornstarch",
+        "amount": 1,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Beef and Broccoli Stir-Fry is a tasty dish made with beef sirloin, broccoli florets, soy sauce, garlic, sesame oil, and cornstarch."
+  },
+  {
+    "name": "Shrimp Scampi",
+    "ingredients": [
+      {
+        "name": "shrimp",
+        "amount": 500,
+        "unit": "grams"
+      },
+      {
+        "name": "garlic",
+        "amount": 4,
+        "unit": "cloves"
+      },
+      {
+        "name": "lemon juice",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "butter",
+        "amount": 3,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "white wine",
+        "amount": 0.25,
+        "unit": "cups"
+      },
+      {
+        "name": "parsley",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Shrimp Scampi is a delicious dish made with shrimp, garlic, lemon juice, butter, white wine, and parsley."
+  },
+  {
+    "name": "Spinach and Feta Stuffed Chicken Breast",
+    "ingredients": [
+      {
+        "name": "chicken breast",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "spinach",
+        "amount": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "feta cheese",
+        "amount": 0.5,
+        "unit": "cups"
+      }
+    ],
+    "description": "Spinach and Feta Stuffed Chicken Breast is a delicious dish made with chicken breast, spinach, and feta cheese. The chicken breasts are stuffed with a mixture of spinach and feta cheese, then baked to perfection."
+  }
+]

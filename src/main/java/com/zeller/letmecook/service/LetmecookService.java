@@ -1,16 +1,20 @@
 package com.zeller.letmecook.service;
 
-import com.zeller.letmecook.basic.RandomGenerator;
+import com.zeller.letmecook.utility.RandomGenerator;
 import com.zeller.letmecook.model.*;
 import com.zeller.letmecook.repository.FridgeRepository;
 import com.zeller.letmecook.repository.RecipeRepository;
+import com.zeller.letmecook.utility.SessionWasteAmountTracker;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.MultiGauge;
+import io.micrometer.core.instrument.MultiGauge.Row;
+import io.micrometer.core.instrument.Tags;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Service
 public class LetmecookService {
@@ -36,7 +40,7 @@ public class LetmecookService {
 		this.gaugeValue = Metrics.gauge("gauge.random.recipe.available.ingredients", new AtomicInteger(0));
 		this.multiGauge = MultiGauge.builder("gauge.multi.best.recipes")
 				.description("the number of available Ingredients from the recipes that qualify for the best recipe")
-				.baseUnit("available Ingredients")
+				.baseUnit("available ingredients")
 				.register(Metrics.globalRegistry);
 	}
 
@@ -133,13 +137,16 @@ public class LetmecookService {
 					appendMultiMeterEntry(sortedRecipes);
 					// determine a best recipe from all best recipes
 					List<RecipeResponse> bestRecipes = sortedRecipes.get(maxKey);
-					// TODO Nullcheck
 					return bestRecipes.get(RandomGenerator.generateBetweenZeroAnd(bestRecipes.size()));
 				});
 	}
 
 	public void appendMultiMeterEntry(HashMap<Integer, List<RecipeResponse>> sortedRecipes) {
-		// TODO implement
+		multiGauge.register(sortedRecipes.entrySet().stream()
+				.map(result ->
+						Row.of(Tags.of("Recipes", result.getValue().stream().map(RecipeResponse::getRecipeName)
+								.collect(Collectors.joining(", "))), result.getKey()))
+				.collect(Collectors.toList()));
 	}
 
 	/**

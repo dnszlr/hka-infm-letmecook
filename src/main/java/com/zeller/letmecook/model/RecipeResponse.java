@@ -33,4 +33,8 @@ public class RecipeResponse {
 	public void setShoppingList(List<Ingredient> shoppingList) {
 		this.shoppingList = shoppingList;
 	}
+
+	public String getRecipeName() {
+		return this.recipe.getName();
+	}
 }

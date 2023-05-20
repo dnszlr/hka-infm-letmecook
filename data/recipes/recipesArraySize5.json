@@ -1,0 +1,187 @@
+[
+  {
+    "name": "Croque Monsieur",
+    "ingredients": [
+      {
+        "name": "bread slices",
+        "amount": 8,
+        "unit": "slices"
+      },
+      {
+        "name": "ham",
+        "amount": 200,
+        "unit": "grams"
+      },
+      {
+        "name": "cheese",
+        "amount": 200,
+        "unit": "grams"
+      },
+      {
+        "name": "butter",
+        "amount": 2,
+        "unit": "tablespoons"
+      },
+      {
+        "name": "bechamel sauce",
+        "amount": 1,
+        "unit": "cup"
+      }
+    ],
+    "description": "Croque Monsieur is a classic French grilled sandwich made with ham, cheese (Gruyère or Emmental), and bechamel sauce. The sandwich is assembled with layers of ham and cheese, topped with bechamel sauce, and then toasted until the cheese is melted and bubbly."
+  },
+  {
+    "name": "Sauerbraten",
+    "ingredients": [
+      {
+        "name": "beef roast",
+        "amount": 1,
+        "unit": "kg"
+      },
+      {
+        "name": "red wine vinegar",
+        "amount": 200,
+        "unit": "ml"
+      },
+      {
+        "name": "onions",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "carrots",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "celery stalks",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "bay leaves",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "juniper berries",
+        "amount": 6,
+        "unit": "pieces"
+      },
+      {
+        "name": "cloves",
+        "amount": 6,
+        "unit": "pieces"
+      }
+    ],
+    "description": "Sauerbraten is a traditional German pot roast made with marinated beef, red wine vinegar, onions, carrots, celery stalks, bay leaves, juniper berries, and cloves. The meat is marinated for several days to develop rich flavors, then slow-cooked until tender."
+  },
+  {
+    "name": "Käsespätzle",
+    "ingredients": [
+      {
+        "name": "spätzle",
+        "amount": 500,
+        "unit": "grams"
+      },
+      {
+        "name": "cheese",
+        "amount": 200,
+        "unit": "grams"
+      },
+      {
+        "name": "onion",
+        "amount": 1,
+        "unit": "piece"
+      },
+      {
+        "name": "butter",
+        "amount": 50,
+        "unit": "grams"
+      },
+      {
+        "name": "salt",
+        "amount": 1,
+        "unit": "teaspoon"
+      },
+      {
+        "name": "black pepper",
+        "amount": 0.25,
+        "unit": "teaspoon"
+      }
+    ],
+    "description": "Käsespätzle is a traditional German dish made with homemade spätzle (soft egg noodles), cheese (Emmental or Gruyère), onions, butter, salt, and black pepper. The spätzle and cheese are layered, baked until the cheese is melted and bubbly, and served as a delicious and comforting dish."
+  },
+  {
+    "name": "Currywurst",
+    "ingredients": [
+      {
+        "name": "bratwurst sausages",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "ketchup",
+        "amount": 0.5,
+        "unit": "cup"
+      },
+      {
+        "name": "curry powder",
+        "amount": 2,
+        "unit": "teaspoons"
+      },
+      {
+        "name": "paprika powder",
+        "amount": 1,
+        "unit": "teaspoon"
+      },
+      {
+        "name": "onion",
+        "amount": 1,
+        "unit": "piece"
+      },
+      {
+        "name": "oil",
+        "amount": 2,
+        "unit": "tablespoons"
+      }
+    ],
+    "description": "Currywurst is a popular German street food made with bratwurst sausages, ketchup, curry powder, paprika powder, onion, and oil. The sausages are fried, sliced, and smothered in a tangy and spicy curry-ketchup sauce, typically served with fries or bread rolls."
+  },
+  {
+    "name": "Aloo Gobi",
+    "ingredients": [
+      {
+        "name": "potatoes",
+        "amount": 4,
+        "unit": "pieces"
+      },
+      {
+        "name": "cauliflower",
+        "amount": 1,
+        "unit": "medium-sized head"
+      },
+      {
+        "name": "onion",
+        "amount": 1,
+        "unit": "piece"
+      },
+      {
+        "name": "ginger",
+        "amount": 1,
+        "unit": "inch"
+      },
+      {
+        "name": "green chilies",
+        "amount": 2,
+        "unit": "pieces"
+      },
+      {
+        "name": "turmeric powder",
+        "amount": 0.5,
+        "unit": "teaspoon"
+      }
+    ],
+    "description": "Aloo Gobi is a popular Indian vegetarian dish made with potatoes, cauliflower, onion, ginger, green chilies, and turmeric powder. The vegetables are cooked together with aromatic spices, resulting in a flavorful and comforting dish that pairs well with rice or bread."
+  }
+]

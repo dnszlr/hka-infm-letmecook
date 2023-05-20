@@ -1,0 +1,41 @@
+{
+  "name": "Mac and Cheese",
+  "ingredients": [
+    {
+      "name": "macaroni",
+      "amount": 250,
+      "unit": "grams"
+    },
+    {
+      "name": "cheese",
+      "amount": 200,
+      "unit": "grams"
+    },
+    {
+      "name": "butter",
+      "amount": 30,
+      "unit": "grams"
+    },
+    {
+      "name": "all-purpose flour",
+      "amount": 30,
+      "unit": "grams"
+    },
+    {
+      "name": "milk",
+      "amount": 500,
+      "unit": "milliliters"
+    },
+    {
+      "name": "salt",
+      "amount": 0.5,
+      "unit": "teaspoons"
+    },
+    {
+      "name": "pepper",
+      "amount": 1,
+      "unit": "teaspoons"
+    }
+  ],
+  "description": "Mac and Cheese is a classic American comfort food dish made with macaroni, cheddar cheese, butter, all-purpose flour, milk, salt, and pepper. The macaroni is cooked until al dente, then mixed with a creamy cheese sauce made from melted butter, flour, milk, and cheddar cheese. It's a hearty and delicious dish that is loved by both kids and adults."
+}

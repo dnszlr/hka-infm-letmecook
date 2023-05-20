@@ -1,4 +1,4 @@
-package com.zeller.letmecook.basic;
+package com.zeller.letmecook.utility;
 
 import java.util.concurrent.ThreadLocalRandom;
 

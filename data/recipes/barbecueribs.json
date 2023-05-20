@@ -1,0 +1,46 @@
+{
+  "name": "Barbecue Ribs",
+  "ingredients": [
+    {
+      "name": "pork ribs",
+      "amount": 2,
+      "unit": "racks"
+    },
+    {
+      "name": "barbecue sauce",
+      "amount": 2,
+      "unit": "cups"
+    },
+    {
+      "name": "brown sugar",
+      "amount": 0.25,
+      "unit": "cups"
+    },
+    {
+      "name": "bell pepper",
+      "amount": 1,
+      "unit": "pieces"
+    },
+    {
+      "name": "garlic powder",
+      "amount": 1,
+      "unit": "tablespoons"
+    },
+    {
+      "name": "onion",
+      "amount": 1,
+      "unit": "tablespoons"
+    },
+    {
+      "name": "salt",
+      "amount": 1,
+      "unit": "tablespoons"
+    },
+    {
+      "name": "pepper",
+      "amount": 1,
+      "unit": "tablespoons"
+    }
+  ],
+  "description": "Barbecue Ribs are a popular American dish made with pork ribs and a flavorful barbecue sauce. The ribs are seasoned with a dry rub made from brown sugar, paprika, garlic powder, onion powder, salt, and pepper. They are then slow-cooked on a grill or in the oven until tender and juicy. Before serving, the ribs are coated with a generous amount of barbecue sauce for added flavor. It's a finger-licking good dish that is often enjoyed at backyard cookouts and summer gatherings."
+}

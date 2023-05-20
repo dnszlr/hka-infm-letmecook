@@ -1,0 +1,61 @@
+{
+  "name": "Cheeseburger",
+  "ingredients": [
+    {
+      "name": "ground beef",
+      "amount": 500,
+      "unit": "grams"
+    },
+    {
+      "name": "cheese",
+      "amount": 4,
+      "unit": "slices"
+    },
+    {
+      "name": "hamburger buns",
+      "amount": 4,
+      "unit": "pieces"
+    },
+    {
+      "name": "lettuce",
+      "amount": 4,
+      "unit": "leaves"
+    },
+    {
+      "name": "tomato",
+      "amount": 1,
+      "unit": "pieces"
+    },
+    {
+      "name": "onion",
+      "amount": 1,
+      "unit": "pieces"
+    },
+    {
+      "name": "pickles",
+      "amount": 4,
+      "unit": "slices"
+    },
+    {
+      "name": "ketchup",
+      "amount": 1,
+      "unit": "teaspoons"
+    },
+    {
+      "name": "mustard",
+      "amount": 1,
+      "unit": "teaspoons"
+    },
+    {
+      "name": "salt",
+      "amount": 1,
+      "unit": "teaspoons"
+    },
+    {
+      "name": "pepper",
+      "amount": 1,
+      "unit": "teaspoons"
+    }
+  ],
+  "description": "A classic American cheeseburger made with ground beef, cheddar cheese, hamburger buns, lettuce, tomato, onion, pickles, ketchup, mustard, salt, and pepper. The beef patty is grilled to perfection, topped with cheese, and served on a bun with all the classic toppings. It's a popular and delicious choice for a backyard barbecue or a casual meal."
+}

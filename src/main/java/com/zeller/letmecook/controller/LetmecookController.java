@@ -2,10 +2,9 @@ package com.zeller.letmecook.controller;
 
 import com.zeller.letmecook.model.*;
 import com.zeller.letmecook.service.LetmecookService;
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.Metrics;
-import io.micrometer.core.instrument.Timer;
-import io.micrometer.core.ipc.http.HttpSender;
+import com.zeller.letmecook.utility.PostRecipeAPITracker;
+import io.micrometer.core.instrument.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
@@ -27,16 +25,34 @@ public class LetmecookController {
 	private final Logger logger;
 	private final LetmecookService letmecookService;
 
-	private final Counter apiCounter;
-	private final Timer randomRecipeTimer;
-	private final AtomicLong msTimeGauge;
+	private Counter apiCounter;
+	private Timer randomRecipeTimer;
+	private AtomicLong msTimeGauge;
+	private final PostRecipeAPITracker postRecipeAPITracker;
+
+	private DistributionSummary importRecipesDistributionSummary;
 
 	public LetmecookController(LetmecookService letmecookService) {
 		this.logger = LoggerFactory.getLogger(LetmecookController.class);
 		this.letmecookService = letmecookService;
+		this.postRecipeAPITracker = new PostRecipeAPITracker();
+		this.micrometerConfiguration();
+	}
+
+	public void micrometerConfiguration() {
 		this.apiCounter = Metrics.counter("counter.api");
 		this.randomRecipeTimer = Metrics.timer("timer.random.recipe");
 		Metrics.more().timeGauge("gauge.time.post.groceries", Collections.emptyList(), this.msTimeGauge = new AtomicLong(0), TimeUnit.MILLISECONDS, AtomicLong::get);
+		FunctionTimer.builder("timer.function.post.recipe.latency", this.postRecipeAPITracker,
+						PostRecipeAPITracker::getCounter,
+						PostRecipeAPITracker::getTotalLatency,
+						TimeUnit.MILLISECONDS)
+				.description("post recipe api timer")
+				.register(Metrics.globalRegistry);
+		this.importRecipesDistributionSummary = DistributionSummary.builder("distributionsummary.import.recipe.request.size")
+				.description("determines the size for the importRecipes endpoint")
+				.baseUnit("bytes")
+				.register(Metrics.globalRegistry);
 	}
 
 	/**
@@ -55,10 +71,15 @@ public class LetmecookController {
 	@PostMapping("/recipes")
 	public ResponseEntity<Recipe> postRecipe(@RequestBody Recipe recipe) {
 		apiCounter.increment();
+		postRecipeAPITracker.incrementCounter();
+		Instant start = Instant.now();
 		logger.info("LetmecookController#postRecipe#call#" + recipe);
-		return letmecookService.createRecipe(recipe)
+		ResponseEntity<Recipe> response = letmecookService.createRecipe(recipe)
 				.map(createdRecipe -> new ResponseEntity<>(createdRecipe, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+		Instant finish = Instant.now();
+		postRecipeAPITracker.updateLatencies(Duration.between(start, finish).toMillis());
+		return response;
 	}
 
 	@DeleteMapping("/recipes/{id}")
@@ -69,7 +90,8 @@ public class LetmecookController {
 	}
 
 	@PostMapping("/recipes/import")
-	public List<Recipe> importRecipes(@RequestBody List<Recipe> recipes) {
+	public List<Recipe> importRecipes(HttpServletRequest request, @RequestBody List<Recipe> recipes) {
+		importRecipesDistributionSummary.record(request.getContentLengthLong());
 		apiCounter.increment();
 		logger.info("LetmecookController#importRecipes#call#" + recipes);
 		return letmecookService.createRecipes(recipes);

@@ -94,5 +94,29 @@
     "price": 0.3,
     "purchase": "2023-05-15",
     "expiration": "2023-05-30"
+  },
+  {
+    "name": "pickles",
+    "amount": 1,
+    "unit": "jar",
+    "price": 2.99,
+    "purchase": "2023-05-21",
+    "expiration": "2023-12-31"
+  },
+  {
+    "name": "carrots",
+    "amount": 500,
+    "unit": "grams",
+    "price": 1.49,
+    "purchase": "2023-05-20",
+    "expiration": "2023-05-27"
+  },
+  {
+    "name": "honey",
+    "amount": 250,
+    "unit": "grams",
+    "price": 3.99,
+    "purchase": "2023-05-19",
+    "expiration": "2024-05-19"
   }
 ]

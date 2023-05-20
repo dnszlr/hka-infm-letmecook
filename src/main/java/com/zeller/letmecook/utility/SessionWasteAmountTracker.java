@@ -1,4 +1,4 @@
-package com.zeller.letmecook.model;
+package com.zeller.letmecook.utility;
 
 public class SessionWasteAmountTracker {
 
