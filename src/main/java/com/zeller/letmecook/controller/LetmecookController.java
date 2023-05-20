@@ -219,7 +219,7 @@ public class LetmecookController {
 				.publishPercentiles(0.3, 0.5, 0.9)
 				.publishPercentileHistogram()
 				.baseUnit("bytes")
-				.minimumExpectedValue(0.0)
+				.minimumExpectedValue(0.01)
 				.maximumExpectedValue(50000.0)
 				.register(Metrics.globalRegistry);
 	}

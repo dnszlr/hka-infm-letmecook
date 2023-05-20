@@ -269,7 +269,7 @@ public class LetmecookService {
 
 	private void micrometerConfiguration() {
 		// FunctionCounter
-		Metrics.globalRegistry.more().counter("counter.session.waste.amount", Collections.emptyList(), sessionWasteAmountTracker, SessionWasteAmountTracker::getSessionWasteAmount);
+		Metrics.globalRegistry.more().counter("custom.counter.session.waste.amount", Collections.emptyList(), sessionWasteAmountTracker, SessionWasteAmountTracker::getSessionWasteAmount);
 		// Gauge
 		this.gaugeValue = Metrics.globalRegistry.gauge("custom.gauge.random.recipe.available.ingredients", new AtomicInteger(0));
 		// Multi-Gauge
