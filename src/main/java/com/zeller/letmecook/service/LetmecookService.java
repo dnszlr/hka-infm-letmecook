@@ -1,5 +1,6 @@
 package com.zeller.letmecook.service;
 
+import com.zeller.letmecook.utility.LatencyTimeout;
 import com.zeller.letmecook.utility.RandomGenerator;
 import com.zeller.letmecook.model.*;
 import com.zeller.letmecook.repository.FridgeRepository;
@@ -248,7 +249,7 @@ public class LetmecookService {
 					Map<String, Grocery> mergedGroceries = new HashMap<>();
 						for(Grocery grocery : fridge.getGroceries()) {
 							logger.info(grocery.toString());
-							this.latencyTimeout(500, 1500);
+							LatencyTimeout.duration(500, 1500); // TODO Caution ThreadSleep
 							if(grocery.equalsForMerge(mergedGroceries.get(grocery.getName()))) {
 								Grocery duplicate = mergedGroceries.get(grocery.getName());
 								duplicate.mergeGrocery(grocery);
@@ -279,12 +280,5 @@ public class LetmecookService {
 		this.mergeLongTaskTimer = LongTaskTimer.builder("custom.long.task.merge.groceries")
 				.description("measures the time needed to merge duplicated grocieries in the database")
 				.register(Metrics.globalRegistry);
-	}
-
-	private void latencyTimeout(int min, int max) {
-		// TODO CAUTION, TIMEOUT BLOCK TO SIMULATE TRAFFIC
-		try {TimeUnit.MILLISECONDS.sleep(RandomGenerator.generate(min, max));}
-		catch(InterruptedException e) {throw new RuntimeException(e);}
-		// TODO CAUTION, TIMEOUT BLOCK TO SIMULATE TRAFFIC
 	}
 }

@@ -2,6 +2,7 @@ package com.zeller.letmecook.controller;
 
 import com.zeller.letmecook.model.*;
 import com.zeller.letmecook.service.LetmecookService;
+import com.zeller.letmecook.utility.LatencyTimeout;
 import com.zeller.letmecook.utility.PostRecipeAPITracker;
 import com.zeller.letmecook.utility.RandomGenerator;
 import io.micrometer.core.instrument.*;
@@ -58,7 +59,7 @@ public class LetmecookController {
 		apiCounter.increment();
 		postRecipeAPITracker.incrementCounter();
 		Instant start = Instant.now();
-		latencyTimeout(50, 200);
+		LatencyTimeout.duration(50, 250); // TODO Caution ThreadSleep
 		logger.info("LetmecookController#postRecipe#call#" + recipe);
 		ResponseEntity<Recipe> response = letmecookService.createRecipe(recipe)
 				.map(createdRecipe -> new ResponseEntity<>(createdRecipe, HttpStatus.OK))
@@ -103,7 +104,7 @@ public class LetmecookController {
 	public ResponseEntity<RecipeResponse> getRandomRecipe(@PathVariable String id) {
 		apiCounter.increment();
 		Instant start = Instant.now();
-		latencyTimeout(50, 250);
+		LatencyTimeout.duration(50, 250); // TODO Caution ThreadSleep
 		logger.info("LetmecookController#getRandomRecipe#call");
 		ResponseEntity<RecipeResponse> response = letmecookService.determineRandomRecipe(id)
 				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
@@ -118,7 +119,7 @@ public class LetmecookController {
 		apiCounter.increment();
 		// SampleTimer
 		Timer.Sample sample = Timer.start(Metrics.globalRegistry);
-		latencyTimeout(50, 250);
+		LatencyTimeout.duration(50, 250); // TODO Caution ThreadSleep
 		logger.info("LetmecookController#getBestRecipe#call#" + id);
 		ResponseEntity<RecipeResponse> response = letmecookService.determineBestRecipe(id)
 				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
@@ -169,7 +170,7 @@ public class LetmecookController {
 	public ResponseEntity<Fridge> postGroceries(@PathVariable String id, @RequestBody List<Grocery> groceries) {
 		apiCounter.increment();
 		Instant start = Instant.now();
-		latencyTimeout(50, 250);
+		LatencyTimeout.duration(50, 250); // TODO Caution ThreadSleep
 		logger.info("LetmecookController#postGroceries#call#" + id + "#" + groceries);
 		ResponseEntity<Fridge> response = letmecookService.addGroceriesToFridge(id, groceries)
 				.map(fridge -> new ResponseEntity<>(fridge, HttpStatus.OK))
@@ -224,12 +225,5 @@ public class LetmecookController {
 				.baseUnit("bytes")
 				.maximumExpectedValue(50000.0)
 				.register(Metrics.globalRegistry);
-	}
-
-	private void latencyTimeout(int min, int max) {
-		// TODO CAUTION, TIMEOUT BLOCK TO SIMULATE TRAFFIC
-		try {TimeUnit.MILLISECONDS.sleep(RandomGenerator.generate(min, max));}
-		catch(InterruptedException e) {throw new RuntimeException(e);}
-		// TODO CAUTION, TIMEOUT BLOCK TO SIMULATE TRAFFIC
 	}
 }
