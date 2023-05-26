@@ -37,6 +37,7 @@ public class LetmecookController {
 		this.logger = LoggerFactory.getLogger(LetmecookController.class);
 		this.letmecookService = letmecookService;
 		this.postRecipeAPITracker = new PostRecipeAPITracker();
+		this.msTimeGauge = new AtomicLong(0);
 		this.micrometerConfiguration();
 	}
 
@@ -78,7 +79,8 @@ public class LetmecookController {
 	@PostMapping("/recipes/import")
 	public List<Recipe> importRecipes(HttpServletRequest request, @RequestBody List<Recipe> recipes) {
 		apiCounter.increment();
-		importRecipesDistributionSummary.record(request.getContentLengthLong());
+		this.logger.info("content length: " + request.getContentLength());
+		importRecipesDistributionSummary.record(request.getContentLength());
 		logger.info("LetmecookController#importRecipes#call#" + recipes);
 		return letmecookService.createRecipes(recipes);
 	}
@@ -203,12 +205,14 @@ public class LetmecookController {
 		// Timer
 		this.randomRecipeTimer = Timer.builder("custom.timer.random.recipe")
 				.description("Duration to determine a random recipe")
+				.serviceLevelObjectives(Duration.ofMillis(80), Duration.ofMillis(150), Duration.ofMillis(250))
 				.publishPercentiles(0.25, 0.5, 0.75)
+				// https://github.com/micrometer-metrics/micrometer/issues/530 publishPercentileHistogram should always be included, even if it creates many default buckets
 				.publishPercentileHistogram()
-				.maximumExpectedValue(Duration.ofMillis(2000))
+				.maximumExpectedValue(Duration.ofMillis(500))
 				.register(Metrics.globalRegistry);
 		// TimeGauge
-		Metrics.globalRegistry.more().timeGauge("custom.gauge.time.post.groceries", Collections.emptyList(), this.msTimeGauge = new AtomicLong(0), TimeUnit.MILLISECONDS, AtomicLong::get); // done
+		Metrics.globalRegistry.more().timeGauge("custom.gauge.time.post.groceries", Collections.emptyList(), this.msTimeGauge, TimeUnit.MILLISECONDS, AtomicLong::get); // done
 		// FunctionTimer
 		FunctionTimer.builder("custom.timer.function.post.recipe.latency", this.postRecipeAPITracker,
 						PostRecipeAPITracker::getCounter,
@@ -222,7 +226,8 @@ public class LetmecookController {
 				.publishPercentiles(0.25, 0.5, 0.75)
 				.publishPercentileHistogram()
 				.baseUnit("bytes")
-				.maximumExpectedValue(50000.0)
+				// maximum of 100kb upload allowed
+				.maximumExpectedValue(100000.0)
 				.register(Metrics.globalRegistry);
 	}
 }
