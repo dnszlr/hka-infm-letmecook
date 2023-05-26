@@ -232,9 +232,11 @@ public class LetmecookService {
 					logger.info("LetmecookService#removeGroceryFromFridge#groceryToBeRemoved: " + groceryToBeRemoved);
 					if (groceryToBeRemoved != null) {
 						float wasteAmount = fridge.getWasteAmount() + groceryToBeRemoved.getPrice();
+						logger.info("waste amount is: " + wasteAmount);
 						fridge.setWasteAmount(wasteAmount);
 						fridge.getGroceries().remove(groceryToBeRemoved);
-						sessionWasteAmountTracker.addSessionWasteAmount(wasteAmount);
+						sessionWasteAmountTracker.addSessionWasteAmount(groceryToBeRemoved.getPrice());
+						logger.info("sessionWasteAmount: " + sessionWasteAmountTracker.getSessionWasteAmount());
 						logger.info("LetmecookService#removeGroceryFromFridge#fridge#wasteAmount: " + fridge.getWasteAmount());
 						fridge = fridgeRepository.save(fridge);
 					}

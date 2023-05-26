@@ -16,12 +16,12 @@
     "expiration": "2023-05-25"
   },
   {
-    "name": "salt",
-    "amount": 0.45,
+    "name": "shrimp",
+    "amount": 500,
     "unit": "grams",
-    "price": 0.99,
-    "purchase": "2023-05-13",
-    "expiration": "2024-05-22"
+    "price": 4.99,
+    "purchase": "2023-05-26",
+    "expiration": "2023-06-10"
   },
   {
     "name": "olive oil",
