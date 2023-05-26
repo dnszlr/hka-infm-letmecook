@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -33,6 +32,7 @@ public class LetmecookService {
 		this.fridgeRepository = fridgeRepository;
 		this.recipeRepository = recipeRepository;
 		this.sessionWasteAmountTracker = new SessionWasteAmountTracker();
+		this.gaugeValue = new AtomicInteger(0);
 		this.micrometerConfiguration();
 	}
 
@@ -96,7 +96,6 @@ public class LetmecookService {
 					List<Ingredient> availableIngredients = response.getAvailableIngredients();
 					gaugeValue.set(availableIngredients.size());
 					// determine a random recipe from all randomRecipes
-					// TODO Nullcheck
 					return response;
 				});
 	}
@@ -232,11 +231,9 @@ public class LetmecookService {
 					logger.info("LetmecookService#removeGroceryFromFridge#groceryToBeRemoved: " + groceryToBeRemoved);
 					if (groceryToBeRemoved != null) {
 						float wasteAmount = fridge.getWasteAmount() + groceryToBeRemoved.getPrice();
-						logger.info("waste amount is: " + wasteAmount);
 						fridge.setWasteAmount(wasteAmount);
 						fridge.getGroceries().remove(groceryToBeRemoved);
 						sessionWasteAmountTracker.addSessionWasteAmount(groceryToBeRemoved.getPrice());
-						logger.info("sessionWasteAmount: " + sessionWasteAmountTracker.getSessionWasteAmount());
 						logger.info("LetmecookService#removeGroceryFromFridge#fridge#wasteAmount: " + fridge.getWasteAmount());
 						fridge = fridgeRepository.save(fridge);
 					}
@@ -271,7 +268,7 @@ public class LetmecookService {
 		// FunctionCounter
 		Metrics.globalRegistry.more().counter("custom.counter.session.waste.amount", Collections.emptyList(), sessionWasteAmountTracker, SessionWasteAmountTracker::getSessionWasteAmount);
 		// Gauge
-		this.gaugeValue = Metrics.globalRegistry.gauge("custom.gauge.random.recipe.available.ingredients", new AtomicInteger(0));
+		this.gaugeValue = Metrics.globalRegistry.gauge("custom.gauge.random.recipe.available.ingredients", this.gaugeValue);
 		// Multi-Gauge
 		// Caution: At least one request must be made for the metric to appear in Prometheus
 		this.multiGauge = MultiGauge.builder("custom.gauge.multi.best.recipes")
