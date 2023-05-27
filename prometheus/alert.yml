@@ -4,3 +4,11 @@ groups:
       - alert: ApplicationDown
         expr: up{job="letmecook"} != 1
         for: 15s
+      - alert: RandomRecipeAverage5min
+        expr: rate(letmecook_custom_timer_random_recipe_seconds_sum[5m]) / rate(letmecook_custom_timer_random_recipe_seconds_count[5m]) >= 0.50
+        for: 10s
+        labels:
+          severity: warning
+        annotations:
+          summary: High average RandomRecipe response time
+          description: "{{ $labels.instance }} has an average random recipe request time greater than 0.5s (current value: {{ $value }}s)"

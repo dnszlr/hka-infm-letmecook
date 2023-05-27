@@ -115,6 +115,23 @@ public class LetmecookController {
 		return response;
 	}
 
+	/**
+	 * For demo purposes only to demonstrate the Alert function of Prometheus in combination with Micrometer.
+	 */
+	@GetMapping("/fridges/{id}/random/alert")
+	public ResponseEntity<RecipeResponse> getRandomRecipeWithAlert(@PathVariable String id) {
+		apiCounter.increment();
+		Instant start = Instant.now();
+		LatencyTimeout.duration(1000, 1001); // TODO Caution ThreadSleep
+		logger.info("LetmecookController#getRandomRecipeWithAlert#call");
+		ResponseEntity<RecipeResponse> response = letmecookService.determineRandomRecipe(id)
+				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+		Instant finish = Instant.now();
+		randomRecipeTimer.record(Duration.between(start, finish));
+		return response;
+	}
+
 	@GetMapping("/fridges/{id}/best")
 	public ResponseEntity<RecipeResponse> getBestRecipe(@PathVariable String id) {
 		apiCounter.increment();

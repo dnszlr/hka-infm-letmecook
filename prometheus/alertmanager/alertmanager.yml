@@ -8,10 +8,10 @@ route:
 receivers:
   - name: 'mail'
     email_configs:
-      - to: 'receiver@xxx.de'
-        from: 'sender@yyy.de'
+      - to: '<receiver@provider.de>'
+        from: '<sender@gmail.de>'
         smarthost: 'smtp.gmail.com:587'
-        auth_username: 'sender@yyy.de'
-        auth_identity: 'sender@yyy.de'
+        auth_username: '<sender@gmail.de>'
+        auth_identity: '<sender@gmail.de>'
         auth_password: "password from sender"
         send_resolved: true
