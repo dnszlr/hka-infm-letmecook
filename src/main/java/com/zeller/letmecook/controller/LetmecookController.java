@@ -122,7 +122,7 @@ public class LetmecookController {
 	public ResponseEntity<RecipeResponse> getRandomRecipeWithAlert(@PathVariable String id) {
 		apiCounter.increment();
 		Instant start = Instant.now();
-		LatencyTimeout.duration(1000, 1001); // TODO Caution ThreadSleep
+		LatencyTimeout.duration(1500, 2000); // TODO Caution ThreadSleep
 		logger.info("LetmecookController#getRandomRecipeWithAlert#call");
 		ResponseEntity<RecipeResponse> response = letmecookService.determineRandomRecipe(id)
 				.map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
