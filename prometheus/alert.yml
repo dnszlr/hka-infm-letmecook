@@ -1,6 +1,6 @@
 groups:
-  - name: DemoAlerts
+  - name: ApplicationHealth
     rules:
       - alert: ApplicationDown
         expr: up{job="letmecook"} != 1
-        for: 5m
+        for: 15s

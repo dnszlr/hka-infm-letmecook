@@ -38,6 +38,16 @@ services:
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus:/prometheus
+  alertmanager:
+    image: prom/alertmanager:v0.23.0
+    container_name: alertmanager
+    restart: unless-stopped
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./prometheus/alertmanager:/config
+      - alertmanager:/data
+    command: --config.file=/config/alertmanager.yml --log.level=debug
   #application
   letmecook:
     build: .
@@ -52,3 +62,4 @@ volumes:
   mongodb:
   mongoexpress:
   prometheus:
+  alertmanager:
