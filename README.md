@@ -53,9 +53,9 @@ Since it's not easy to spot all the metrics on first sight, they will be linked 
 [Service](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/service/LetmecookService.java): At the end of this file you can find the configuration of *FunctionCounter*, *Gauge*, *Multi-Gauge* and *LongTaskTimer*
 
 The following table shows which API endpoints trigger which micrometers.
-| [Controller Endpoint](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java) | Metric |
+| API | Metric |
 | ------------- | ------------- |
-| * | Counter   | 
+| * (every API) | Counter   | 
 | [deleteGroceryByName](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L202) | FunctionCounter 
 | [getRandomRecipe](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L105)  | Gauge  |
 | [postGroceries](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L188)   | TimeGauge  |
