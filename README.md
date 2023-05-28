@@ -28,11 +28,8 @@ The following steps are required for a Docker container deployment:
 The following steps are required if you want to run the application via sprint boot:
 1. Start the docker engine
 2. Navigate to the applications folder
-3.  `docker-compose start mongodb`
-4. `docker-compose start mongo-express` (Optional)
-5. `docker-compose start prometheus`
-6. `docker-compose start alertmanager` (Optional)
-7. Start the Application via Spring Boot
+3.  `docker-compose up mongodb mongo-express prometheus alertmanager` (mongo-express and alertmanager are ***optional***)
+4.  Start the Application via Spring Boot
 
 ## Suggestions
 When you start the application, first import some recipes and create a fridge. You can then add some ingredients to your fridge and try out some of the queries.
