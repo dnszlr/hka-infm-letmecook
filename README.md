@@ -56,15 +56,15 @@ The following table shows which API endpoints trigger which micrometers.
 | [Controller Endpoint](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java) | Metric |
 | ------------- | ------------- |
 | * | Counter   | 
-| deleteGroceryByName | FunctionCounter 
-| randomRecipe  | Gauge  |
-| postGroceries   | TimeGauge  |
-| bestRecipe  | Multi-Gauge  | 
-| randomRecipe  | Timer | 
-| bestRecipe  | Timer.Sample  | 
-| postRecipe   | FunctionTimer  | 
-| mergeDuplicatedGroceries  | LongTaskTimer  | 
-| importRecipes   | DistributionSummary  | 
+| [deleteGroceryByName}(https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L202) | FunctionCounter 
+| [getRandomRecipe](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L105)  | Gauge  |
+| [postGroceries](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L188)   | TimeGauge  |
+| [getBestRecipe](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L136)  | Multi-Gauge  | 
+| [getRandomRecipe](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L105)  | Timer | 
+| [getBestRecipe](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L136)  | Timer.Sample  | 
+| [postRecipe](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L58)   | FunctionTimer  | 
+| [mergeDuplicatedGroceries](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L211)  | LongTaskTimer  | 
+| [importRecipes](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L80)   | DistributionSummary  | 
 
 
 ## Monitoring
