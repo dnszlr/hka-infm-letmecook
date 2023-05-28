@@ -32,7 +32,7 @@ The following steps are required if you want to run the application via sprint b
 4.  Start the Application via Spring Boot
 
 ## Suggestions
-When you start the application, first import some recipes and create a fridge. You can then add some ingredients to your fridge and try out some of the queries.
+When you start the application, first import some recipes and create a fridge. You can then add some groceries to your fridge and try out some of the queries.
 Predefined data for these queries can be found [here](https://github.com/dnszlr/hka-infm-letmecook/tree/master/data).
 
 ## Useful tools (To access these links, the Docker containers must be running)
