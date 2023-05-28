@@ -56,7 +56,7 @@ The following table shows which API endpoints trigger which micrometers.
 | [Controller Endpoint](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java) | Metric |
 | ------------- | ------------- |
 | * | Counter   | 
-| [deleteGroceryByName}(https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L202) | FunctionCounter 
+| [deleteGroceryByName](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L202) | FunctionCounter 
 | [getRandomRecipe](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L105)  | Gauge  |
 | [postGroceries](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L188)   | TimeGauge  |
 | [getBestRecipe](https://github.com/dnszlr/hka-infm-letmecook/blob/master/src/main/java/com/zeller/letmecook/controller/LetmecookController.java#L136)  | Multi-Gauge  | 
