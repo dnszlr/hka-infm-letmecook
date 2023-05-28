@@ -19,17 +19,20 @@ Users can add their groceries to a virtual fridge and remove expired groceries. 
 
 ## Getting Started
 The following steps are required for a Docker container deployment:
-1. Navigate to the applications folder
-2. `./gradlew build`
-3. `docker-compose up`
-4. To stop the application write `docker-compose down`.
+1. Start the docker engine
+2. Navigate to the applications folder
+3. `./gradlew build`
+4. `docker-compose up`
+5. To stop the application write `docker-compose down`.
 
 The following steps are required if you want to run the application via sprint boot:
-1. `docker-compose start mongodb`
-2. `docker-compose start mongo-express` (Optional)
-3. `docker-compose start prometheus`
-4. `docker-compose start alertmanager` (Optional)
-5. Start the Application via Spring Boot
+1. Start the docker engine
+2. Navigate to the applications folder
+3.  `docker-compose start mongodb`
+4. `docker-compose start mongo-express` (Optional)
+5. `docker-compose start prometheus`
+6. `docker-compose start alertmanager` (Optional)
+7. Start the Application via Spring Boot
 
 ## Suggestions
 When you start the application, first import some recipes and create a fridge. You can then add some ingredients to your fridge and try out some of the queries.
