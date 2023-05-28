@@ -25,10 +25,10 @@ The following steps are required for a Docker container deployment:
 4. To stop the application write `docker-compose down`.
 
 The following steps are required if you want to run the application via sprint boot:
-1. docker-compose start mongodb
-2. docker-compose start mongo-express (Optional)
-3. docker-compose start prometheus
-4. docker-compose start alertmanager (Optional)
+1. `docker-compose start mongodb`
+2. `docker-compose start mongo-express` (Optional)
+3. `docker-compose start prometheus`
+4. `docker-compose start alertmanager` (Optional)
 5. Start the Application via Spring Boot
 
 ## Suggestions
