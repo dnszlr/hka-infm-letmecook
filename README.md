@@ -3,7 +3,7 @@
 ![Repository Banner](https://i.imgflip.com/74bvex.png)
 
 Repository for the seminar paper on "Monitoring of Applications with Micrometer" supervised by Professor Vogelsang at Karlsruhe University of Applied Sciences.
-The goal of this repository is to provide a sample application for Micrometer in combination with Prometheus.
+The goal of this repository is to provide a sample application for [Micrometer](https://micrometer.io/) in combination with [Prometheus](https://prometheus.io/).
 
 ## Idea
 Code examples in the micrometer documentation show possible implementations, but these are often not transferable to one's own system without adaptation. For this reason, it is useful to design a sample application that demonstrates the capabilities of micrometer and allows to interact with it. In this way, the functions of the monitoring library can be tested on a real application, and assistance can be given in the selection of suitable metrics.
