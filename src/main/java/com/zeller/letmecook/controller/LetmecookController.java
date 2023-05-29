@@ -229,7 +229,7 @@ public class LetmecookController {
 				.maximumExpectedValue(Duration.ofMillis(500))
 				.register(Metrics.globalRegistry);
 		// TimeGauge
-		Metrics.globalRegistry.more().timeGauge("custom.gauge.time.post.groceries", Collections.emptyList(), this.msTimeGauge, TimeUnit.MILLISECONDS, AtomicLong::get); // done
+		Metrics.globalRegistry.more().timeGauge("custom.gauge.time.post.groceries", Collections.emptyList(), this.msTimeGauge, TimeUnit.MILLISECONDS, AtomicLong::get);
 		// FunctionTimer
 		FunctionTimer.builder("custom.timer.function.post.recipe.latency", this.postRecipeAPITracker,
 						PostRecipeAPITracker::getCounter,
