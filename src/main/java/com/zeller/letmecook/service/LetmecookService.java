@@ -89,12 +89,15 @@ public class LetmecookService {
 							randomRecipes.add(recipe);
 						}
 					}
-					Recipe recipe = randomRecipes.get(RandomGenerator.generateBetweenZeroAnd(randomRecipes.size()));
-					// This seems redundant, but it makes more sense to determine the missingIngredients
-					// and matchingIngredients only once for the random recipe.
-					RecipeResponse response = createRecipeResponse(recipe, groceryNames);
-					List<Ingredient> availableIngredients = response.getAvailableIngredients();
-					gaugeValue.set(availableIngredients.size());
+					RecipeResponse response = null;
+					if(!randomRecipes.isEmpty()) {
+						Recipe recipe = randomRecipes.get(RandomGenerator.generateBetweenZeroAnd(randomRecipes.size()));
+						// This seems redundant, but it makes more sense to determine the missingIngredients
+						// and matchingIngredients only once for the random recipe.
+						response = createRecipeResponse(recipe, groceryNames);
+						List<Ingredient> availableIngredients = response.getAvailableIngredients();
+						gaugeValue.set(availableIngredients.size());
+					}
 					// determine a random recipe from all randomRecipes
 					return response;
 				});
@@ -126,9 +129,13 @@ public class LetmecookService {
 								.add(recipeResponse);
 					}
 					appendMultiMeterEntry(sortedRecipes);
-					// determine a best recipe from all best recipes
-					List<RecipeResponse> bestRecipes = sortedRecipes.get(maxKey);
-					return bestRecipes.get(RandomGenerator.generateBetweenZeroAnd(bestRecipes.size()));
+					RecipeResponse response = null;
+					if(!sortedRecipes.isEmpty()) {
+						// determine a best recipe from all best recipes
+						List<RecipeResponse> bestRecipes = sortedRecipes.get(maxKey);
+						response = bestRecipes.get(RandomGenerator.generateBetweenZeroAnd(bestRecipes.size()));
+					}
+					return response;
 				});
 	}
 
