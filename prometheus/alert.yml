@@ -4,6 +4,8 @@ groups:
       - alert: ApplicationDown
         expr: up{job="letmecook"} != 1
         for: 15s
+  - name: EndpointHealth
+    rules:
       - alert: RandomRecipeResponseTime
         expr: rate(letmecook_custom_timer_random_recipe_seconds_sum[5m]) / rate(letmecook_custom_timer_random_recipe_seconds_count[5m]) >= 0.50
         for: 10s
